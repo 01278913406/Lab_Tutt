@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { AppTopbarComponent } from './app.topbar/app.topbar.component';
 
 @Component({
   selector: 'app-root',

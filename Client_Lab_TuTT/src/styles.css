@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-body {
+/* body {
     font-size: 14px;
     background: #0d2d6c;
     font-family: "Roboto";
@@ -22,13 +22,13 @@ footer {
     padding-top: 255px;
     padding-bottom: 20px;
 }
-/* .container {
+.container {
     width: 100%;
     padding-right: 15px;
     padding-left: 15px;
     margin-right: auto;
     margin-left: auto;
-} */
+} 
 header .logo {
     display: inline-block;
     vertical-align: middle;
@@ -47,4 +47,4 @@ header .logo {
 .navbar-root{
     background: #0d2d6c;
     color: #fff;
-}
+} */

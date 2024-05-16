@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { LocalStorageService } from './local-storage.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService {
+    constructor(private _LocalStorageService: LocalStorageService) { }
     private isLoggedIn = false;
 
     login(): Observable<boolean> {
@@ -17,6 +19,8 @@ export class AuthService {
     }
 
     isAuthenticated(): boolean {
+        if (this._LocalStorageService.getUser() != null)
+            this.isLoggedIn = false;
         return this.isLoggedIn;
     }
 }

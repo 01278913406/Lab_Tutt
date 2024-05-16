@@ -1,0 +1,108 @@
+.login-container {
+    background-image: url(/assets/images/Background_box-login.svg);
+    background-color: white;
+    background-size: cover;
+    min-width: 100%;
+    min-height: 100%;
+    border-radius: 25px;
+}
+
+.login-container .logo {
+    float: left;
+    width: 100%;
+    text-align: center;
+    padding-top: 50px;
+    padding-bottom: 30px;
+}
+
+.login-container .logo img {
+    width: 116px;
+}
+
+.login-container .input-group {
+    float: left;
+    width: 100%;
+    text-align: center;
+    padding: 15px 20px;
+    margin: 0 auto;
+}
+.login-container .input-group img{
+    height: 15px; 
+    width:15px;
+}
+
+.login-container .form-caption.remember {
+    padding: 5px 0px 5px 10px;
+    text-align: left;
+}
+
+.login-container .form-caption a, .login-container .form-caption label {
+    color: white !important;
+    font-style: italic !important;
+    font-family: Roboto-Light !important;
+    font-size: 12px !important;
+    font-weight: normal;
+}
+
+.login-container .form-caption input[type=checkbox] + input + label span {
+    display: inline-block;
+    width: 19px;
+    height: 19px;
+    margin: -2px 0 0 0;
+    vertical-align: middle;
+    /* background: url(../images/check_radio_sheet.png) left top no-repeat; */
+    cursor: pointer;
+}
+
+.login-container .form-caption input[type=checkbox]{
+    margin-left: 10px;
+}
+
+.login-container .form-button-control {
+    float: left;
+    width: 100%;
+    text-align: center;
+    padding: 5px 0px;
+}
+
+.login-container .qrcode {
+    float: left;
+    width: 100%;
+    text-align: center;
+    padding: 15px 0px;
+}
+
+.login-container .qrcode img {
+    width: 120px;
+    height: 120px;
+    background-color: white;
+    border: 1px solid white;
+}
+
+.login-container .appstore {
+    float: left;
+    width: 50%;
+    text-align: center;
+}
+
+.login-container .appstore img {
+    height: 30px;
+    border-radius: 15px;
+    border: 1px solid white;
+}
+
+.login-container .appstore .android {
+    padding: 10px 0px 40px 40px;
+}
+
+.distance_row{
+    height: 25px;
+}
+
+.login-container .error-message {
+    float: left;
+    width: 100%;
+    height: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+}

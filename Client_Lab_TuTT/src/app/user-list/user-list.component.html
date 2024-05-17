@@ -1,0 +1,83 @@
+<div class="container mt-4">
+    <h4 class="mb-3">DANH SÁCH NGƯỜI DÙNG</h4>
+    <div class="row mb-3">
+        <div class="col-md-2">
+            <select class="form-select" aria-label="">
+                <option selected>Chọn giới tính</option>
+                <option value="0">Nam</option>
+                <option value="1">Nữ</option>
+                <option value="1">Không xác định</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <div class="input-group">
+                <!-- End of inner-addon -->
+                <input type="text" class="form-control" placeholder="Từ ngày">
+                <!-- Start of inner-addon -->
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="bi bi-calendar"></i></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="input-group">
+                <!-- End of inner-addon -->
+                <input type="text" class="form-control" placeholder="Đến ngày">
+                <!-- Start of inner-addon -->
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="bi bi-calendar"></i></span>
+                </div>
+            </div>
+            <!-- <input type="text" ngxDaterangepickerBootstrap [singleDatePicker]="true"
+                [(ngModel)]="selectedSingleCalendarAutoLeft" [closeOnAutoApply]="true" [autoApply]="true"
+                (datesUpdated)="onDateRangeChanged($event)" /> -->
+
+        </div>
+        <div class="col-md-6">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Tìm kiếm theo..." aria-label="Tìm kiếm theo..."
+                    aria-describedby="basic-addon1" name="Username" id="Username">
+                <div class="input-group-text">
+                    <img src="/assets/images/icons/search-svg.svg">
+                </div>
+            </div>
+            <!-- <input type="text" class="form-control" placeholder="Tìm kiếm theo..." [(ngModel)]="searchTerm" (input)="search()"> -->
+        </div>
+
+    </div>
+    <div class="row">
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Chọn</th>
+                    <th>Họ tên</th>
+                    <th>Tên đăng nhập</th>
+                    <th>Ngày sinh </th>
+                    <th>Giới tính </th>
+                    <th>Điện thoại </th>
+                    <th>Email</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of dataSource">
+                    <th></th>
+                    <th></th>
+                    <th>{{ user.fullName }}</th>
+                    <th>{{ user.username }}</th>
+                    <th>{{ user.birthDate }}</th>
+                    <th>{{ user.gender }}</th>
+                    <th>{{ user.phoneNumber }} </th>
+                    <th>{{ user.email }}</th>
+                    <td>
+                        <button class="btn btn-primary btn-sm" (click)="openEditModal(user)">Edit</button>
+                        <button class="btn btn-danger btn-sm" (click)="deleteUser(user.id)">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>

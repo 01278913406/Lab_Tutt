@@ -5,6 +5,11 @@ import { shareReplay } from 'rxjs/internal/operators/shareReplay';
 import { retry } from 'rxjs/internal/operators/retry';
 import { catchError } from 'rxjs/internal/operators/catchError';
 
+/**
+ * Service cơ bản để kết nối dịch vụ api backend
+ * post, get, delete, detail, put
+ * tutt 15/05/2024 create
+ */
 export abstract class BaseService {
     _http: HttpClient;
     _injector: Injector;
@@ -25,17 +30,36 @@ export abstract class BaseService {
         this.serviceUri = serviceUri;
     }
 
+    /**
+     * Gets detail
+     * @param id 
+     * @returns detail 
+     * tutt2 5/17/2024 created
+     */
     getDetail(id: any): Promise<ResponseResult | undefined> {
         const url = `${this.serviceUri}/${id}`;
         return this.defaultGet(url);
     }
 
+    /**
+     * Posts base service
+     * @param item 
+     * @returns object ResponseResult | null 
+     * tutt2 5/17/2024 created
+     */
     post(item: any): Promise<ResponseResult | undefined> {
         return this._http
             .post<ResponseResult>(this.serviceUri, item, this.headersOptions())
             .pipe(catchError(err => this.handleError(err, this._injector))).toPromise();
     }
 
+    /**
+     * Puts base service
+     * @param id 
+     * @param item 
+     * @returns put 
+     * tutt2 5/17/2024 created
+     */
     put(id: string, item: any): Promise<ResponseResult | undefined> {
         const url = `${this.serviceUri}/${id}`;
 
@@ -43,6 +67,12 @@ export abstract class BaseService {
             .put<ResponseResult>(url, item, this.headersOptions()).toPromise();
     }
 
+    /**
+     * Deletes base service
+     * @param id 
+     * @returns delete 
+     * tutt2 5/17/2024 created
+     */
     delete(id: number): Promise<ResponseResult | undefined> {
         const url = `${this.serviceUri}/${id}`;
         return this._http
@@ -50,6 +80,12 @@ export abstract class BaseService {
             .pipe(retry(this.RETRY_COUNT)).toPromise();
     }
 
+    /**
+     * Deletes many
+     * @param lstId 
+     * @returns many
+     * tutt2 5/17/2024 created 
+     */
     deleteMany(lstId: string): Promise<ResponseResult | undefined> {
         const url = `${this.serviceUri}/DeleteMany/${lstId}`;
         return this._http
@@ -57,6 +93,12 @@ export abstract class BaseService {
             .pipe(retry(this.RETRY_COUNT)).toPromise();
     }
 
+    /**
+     * Defaults get
+     * @param apiUrl 
+     * @returns get
+     * tutt2 5/17/2024 created 
+     */
     defaultGet(apiUrl: string): Promise<ResponseResult | undefined> {
         return this._http.get<ResponseResult>(apiUrl, this.headersOptions())
             .pipe(
@@ -64,18 +106,36 @@ export abstract class BaseService {
                 retry(this.RETRY_COUNT)
             ).toPromise();
     }
+    /**
+     * Defaults post
+     * @param apiUrl 
+     * @param item 
+     * @returns post
+     * tutt2 5/17/2024 created 
+     */
     defaultPost(apiUrl: string, item: any): Promise<ResponseResult | undefined> {
         return this._http
             .post<ResponseResult>(apiUrl, item, this.headersOptions())
             .pipe(catchError(err => this.handleError(err, this._injector))).toPromise();
     }
+    /**
+     * Defaults delete
+     * @param apiUrl 
+     * @returns delete
+     * tutt2 5/17/2024 created 
+     */
     defaultDelete(apiUrl: string): Promise<ResponseResult | undefined> {
         return this._http
             .delete<ResponseResult>(apiUrl)
             .pipe(retry(this.RETRY_COUNT)).toPromise();
     }
 
-
+    /**
+     * Gets ignore client cache
+     * @param apiUrl 
+     * @returns ignore client cache 
+     * tutt2 5/17/2024 created
+     */
     getIgnoreClientCache(apiUrl: string): Promise<ResponseResult | undefined> {
 
         const options = {
@@ -89,7 +149,13 @@ export abstract class BaseService {
                 catchError((err: HttpErrorResponse) => this.handleError(err, this._injector))
             ).toPromise();
     }
-
+    /**
+     * Handles error
+     * @param error 
+     * @param injector 
+     * @returns  
+     * tutt2 5/17/2024 created
+     */
     handleError(error: any, injector: Injector) {
         if (error.status === 401 || error.status == 403) {
             error.message = `Bạn không có quyền truy cập (${error.status})`;
@@ -98,6 +164,11 @@ export abstract class BaseService {
         }
         return Promise.reject(error);
     }
+    /**
+     * Headers options
+     * @returns  
+     * tutt2 5/17/2024 created
+     */
     headersOptions() {
         const httpOptions = {
             headers: new HttpHeaders({

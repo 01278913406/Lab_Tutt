@@ -53,10 +53,11 @@
                                 </li>
                             </ul>
                             <form class="d-flex">
-                                <button *ngIf="crrUser" type="submit" class="btn btn-outline-primary">Đăng nhập</button>
+                                <button *ngIf="!crrUser" type="submit" class="btn btn-outline-primary">Đăng nhập</button>
                                 <!-- <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                                 <button class="btn btn-outline-success" type="submit">Search</button> -->
-                                <div class="topbar-item-name-wrapper"><span class="topbar-item-name">{{crrUser.userName}}</span>
+                                <div *ngIf="crrUser" class="topbar-item-name-wrapper">
+                                    <span class="topbar-item-name">{{crrUser.fullName}}</span>
                                 </div>
                             </form>
                         </div>

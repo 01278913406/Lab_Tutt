@@ -4,11 +4,13 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { GuardService } from './lib-shared/auth/guard.service';
 import { HomeComponent } from './home/home.component';
+import { UserListComponent } from './user-list/user-list.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent, canActivate: [GuardService] },
   { path: 'login', component: LoginComponent },
+  { path: 'nguoi-dung', component: UserListComponent, canActivate: [GuardService] },
   {
     path: 'error',
     loadChildren: () => import('./error/error.module').then(mod => mod.ErrorModule)

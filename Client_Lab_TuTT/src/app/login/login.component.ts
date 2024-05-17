@@ -1,17 +1,18 @@
 import { Component, Injector, NgModule } from '@angular/core';
-import { Router } from '@angular/router';
 
 import { UsersService } from '../lib-shared/services/users.service';
-import { LocalStorageService } from '../lib-shared/auth/local-storage.service';
-
+import { AuthService } from '../lib-shared/auth/auth.service';
+/**
+ * Component login
+ * tutt2 5/17/2024 created
+ */
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
+
 export class LoginComponent {
-  username: string = "";
-  password: string = "";
   errorMessage: string = "";
   passwordFieldType: string = 'password';
   objUserLogin: any = {
@@ -22,32 +23,35 @@ export class LoginComponent {
   constructor(
     protected _injector: Injector,
     private _usersService: UsersService,
-    private _LocalStorageService: LocalStorageService
+    private _authService: AuthService
   ) {
   }
 
   async ngOnInit() {
-    if (this._LocalStorageService.isPlatformBrowser()) {
-      // Access localStorage here
-      const data = localStorage.getItem('cachedUser');
-      console.log(data);
-    }
-    this.onCheckUserLogin();
+     this.onCheckUserLogin();
   }
 
-  async onCheckUserLogin(){
-    if(this._LocalStorageService.getUser() != null)
-          window.location.href = "/home";
+  /**
+   * Determines whether check user login on
+   * tutt2 5/17/2024 created
+   */
+   onCheckUserLogin() {
+    if (this._authService.getCurrentUser() != null)
+      window.location.href = "/home";
   }
+
+  /**
+   * Determines whether submit login on
+   * Determines whether check user login on
+   */
   async onSubmitLogin() {
-    console.log("dữ liệu truyền vào xác thực", JSON.stringify(this.objUserLogin))
     await this._usersService.Login(
       this.objUserLogin
     ).then(rs => {
       if (rs != undefined) {
         if (rs.status) {
-          this._LocalStorageService.saveUser(rs.data, 30);
-          window.location.href = "/home";
+          this._authService.saveAccessToken(rs.data, 30);
+          window.location.href = "/nguoi-dung";
         }
         else {
           this.errorMessage = rs.message;
@@ -56,13 +60,12 @@ export class LoginComponent {
     });
   }
 
+  /**
+   * Toggles password visibility
+   * Determines whether check user login on
+   */
   togglePasswordVisibility(): void {
     this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password';
   }
 
-  onSubmit() {
-    // Implement authentication logic here
-    console.log('Username:', this.username);
-    console.log('Password:', this.password);
-  }
 }

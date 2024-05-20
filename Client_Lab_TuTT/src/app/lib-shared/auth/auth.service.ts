@@ -4,6 +4,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { jwtDecode } from "jwt-decode";
 
 import { User } from '../models/user';
+import { promises } from 'node:fs';
 /**
  * Service lưu, lấy thông tin liên quan đến xác thực người dùng
  * tutt2 5/17/2024 created
@@ -37,12 +38,24 @@ export class AuthService {
      * @returns object User
      * tutt2 5/17/2024 created
      */
-    async getCurrentUser() {
+    async getCurrentUser(): Promise<User | null> {
         const crrUser = new User();
         if (isPlatformBrowser(this.platformId)) {
+            const now = new Date().getTime();
+            const expirationTime = parseInt(localStorage.getItem(this.EXPIRATION_KEY) || '0', 10);
+
+            //kiểm tra thời gian lưu thông tin người dùng 
+            //nếu quá thời gian thì xóa thông tin người dùng bắt đăng nhập lại
+            if (now > expirationTime) {
+                this.removeUser();
+                return null;
+            }
+
+            //lấy thông tin token key đã lưu trong localStorage
             const user = localStorage.getItem(this.USER_KEY);
             if (user) {
                 const accessToken = JSON.parse(user);
+                //decode chuỗi token
                 const claims: any = jwtDecode(accessToken.token);
                 if (claims) {
                     crrUser.username = claims.sub;
@@ -53,4 +66,13 @@ export class AuthService {
         }
         return crrUser;
     }
+
+    //xóa thông tin token key đã lưu nếu quá thời gian
+    //yêu cầu đăng nhập lại
+    removeUser(): void {
+        localStorage.removeItem(this.USER_KEY);
+        localStorage.removeItem(this.EXPIRATION_KEY);
+    }
+
+
 }

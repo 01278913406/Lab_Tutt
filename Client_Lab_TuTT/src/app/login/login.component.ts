@@ -1,4 +1,5 @@
-import { Component, Injector, NgModule } from '@angular/core';
+import { Component, Inject, Injector, NgModule, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 import { UsersService } from '../lib-shared/services/users.service';
 import { AuthService } from '../lib-shared/auth/auth.service';
@@ -21,6 +22,7 @@ export class LoginComponent {
   };
 
   constructor(
+    @Inject(PLATFORM_ID) private platformId: object,
     protected _injector: Injector,
     private _usersService: UsersService,
     private _authService: AuthService
@@ -28,16 +30,24 @@ export class LoginComponent {
   }
 
   async ngOnInit() {
-     this.onCheckUserLogin();
+    this.onCheckUserLogin();
   }
 
   /**
    * Determines whether check user login on
    * tutt2 5/17/2024 created
    */
-   onCheckUserLogin() {
-    if (this._authService.getCurrentUser() != null)
-      window.location.href = "/home";
+  onCheckUserLogin() {
+    if (isPlatformBrowser(this.platformId)) {
+      this._authService.getCurrentUser().then(rs => {
+        if (rs) {
+          window.location.href = "/home";
+        }
+      })
+    }
+    // console.log("page-login-onCheckUserLogin",Object.keys(currUser).length);
+    // if (this._authService.getCurrentUser() != null)
+    //   window.location.href = "/home";
   }
 
   /**
@@ -50,7 +60,7 @@ export class LoginComponent {
     ).then(rs => {
       if (rs != undefined) {
         if (rs.status) {
-          this._authService.saveAccessToken(rs.data, 30);
+          this._authService.saveAccessToken(rs.data, 300);
           window.location.href = "/nguoi-dung";
         }
         else {

@@ -13,11 +13,11 @@ export class UsersService extends BaseService {
         super(http, injector, `${environment.apiDomain.LABTuttEndPoint}/User`);
     }
     // lấy tất cả danh sách người dùng
-    GetsAllUsers() {
-        const queryString = `${this.serviceUri}`;
+    GetUsersClient(key: string, gender: string, page: number, pageSize: number) {
+        const queryString = `${this.serviceUri}?key=${key}&gender=${gender}&page=${page}&pageSize=${pageSize}`;
         return this.defaultGet(queryString);
     }
-    
+
     /**
      * Kiểm tra thông tin đăng nhập người dùng
      * @param itemUser 
@@ -29,6 +29,6 @@ export class UsersService extends BaseService {
         return this.defaultPost(queryString, itemUser);
     }
 
-    
+
 
 }

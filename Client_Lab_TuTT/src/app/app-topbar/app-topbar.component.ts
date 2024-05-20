@@ -14,7 +14,7 @@ import { AuthService } from '../lib-shared/auth/auth.service';
 
 export class AppTopbarComponent {
   isLogin: boolean = false;
-  crrUser!: User;
+  crrUser!: User | null;
 
   constructor(
     protected _injector: Injector,
@@ -24,6 +24,12 @@ export class AppTopbarComponent {
 
   async ngOnInit() {
     //lấy thông tin người dùng đã đăng nhập
+    this.getCurrentUser()
+  }
+
+  //lấy thông tin người dùng đã đăng nhập
+  async getCurrentUser()
+  {
     this.crrUser = await this._authService.getCurrentUser();
   }
 }

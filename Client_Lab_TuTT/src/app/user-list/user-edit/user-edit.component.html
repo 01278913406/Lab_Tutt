@@ -1,0 +1,85 @@
+<div class="modal fade show" tabindex="-1" style="display: block;" aria-modal="true" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{title}}</h5>
+                <button type="button" class="btn-close" (click)="onCancel()"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="editUserForm">
+                    <div class="mb-3 row">
+                        <label for="inputUsername" class="col-sm-2 col-form-label">Tên đăng nhập</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputUsername">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="inputFullName" class="col-sm-2 col-form-label">Họ tên</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputFullName">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="inputFullName" class="col-sm-2 col-form-label">Họ tên</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputFullName">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="static" class="col-sm-2 col-form-label">Ngày sinh</label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control-plaintext" id="staticEmail"
+                                value="email@example.com">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" id="inputPassword">
+                        </div>
+                    </div>
+                    <div class="form-floating mb-3 row">
+                        <input type="email" class="form-control" id="floatingInputValue" placeholder="name@example.com"
+                            value="test@example.com">
+                        <label for="floatingInputValue">Tên đăng nhập</label>
+                    </div>
+                    <div class="form-floating mb-3 row">
+                        <input type="email" class="form-control" id="floatingInputValue" placeholder="name@example.com"
+                            value="test@example.com">
+                        <label for="floatingInputValue">Họ tên</label>
+                    </div>
+                    <div class="form-floating mb-3 row">
+                        <input type="email" class="form-control" id="floatingInputValue" placeholder="name@example.com"
+                            value="test@example.com">
+                        <label for="floatingInputValue">Ngày sinh</label>
+                    </div>
+                    <div class="form-floating mb-3 row">
+                        <input type="email" class="form-control" id="floatingInputValue" placeholder="name@example.com"
+                            value="test@example.com">
+                        <label for="floatingInputValue">Giới tính</label>
+                    </div>
+                    <div class="form-floating mb-3 row">
+                        <input type="email" class="form-control" id="floatingInputValue" placeholder="name@example.com"
+                            value="test@example.com">
+                        <label for="floatingInputValue">Số điện thoại</label>
+                    </div>
+                    <div class="form-floating mb-3 row">
+                        <input type="email" class="form-control" id="floatingInputValue" placeholder="name@example.com"
+                            value="test@example.com">
+                        <label for="floatingInputValue">Mật Khẩu</label>
+                    </div>
+                    <div class="form-floating mb-3 row">
+                        <input type="email" class="form-control" id="floatingInputValue" placeholder="name@example.com"
+                            value="test@example.com">
+                        <label for="floatingInputValue">Nhập lại mật khẩu</label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="onCancel()">Cancel</button>
+                <button type="button" class="btn btn-primary" (click)="onSave()">Save</button>
+            </div>
+        </div>
+
+    </div>
+</div>

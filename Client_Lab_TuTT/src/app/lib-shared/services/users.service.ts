@@ -13,8 +13,9 @@ export class UsersService extends BaseService {
         super(http, injector, `${environment.apiDomain.LABTuttEndPoint}/User`);
     }
     // lấy tất cả danh sách người dùng
-    GetUsersClient(key: string, gender: string, page: number, pageSize: number) {
-        const queryString = `${this.serviceUri}?key=${key}&gender=${gender}&page=${page}&pageSize=${pageSize}`;
+    GetUsersClient(key: string, gender: string, fromDate: Date, toDate: Date, page: number, pageSize: number) {
+        const queryString = `${this.serviceUri}?key=${key}&gender=${gender}&fromDate=${fromDate}&toDate=${toDate}&page=${page}&pageSize=${pageSize}`;
+        console.log("endpoint: ", queryString);
         return this.defaultGet(queryString);
     }
 
@@ -29,6 +30,9 @@ export class UsersService extends BaseService {
         return this.defaultPost(queryString, itemUser);
     }
 
-
+    DeleteUserById(id: number) {
+        const queryString = `${this.serviceUri}/DeleteUserById/${id}`;
+        return this.defaultDelete(queryString);
+    }
 
 }

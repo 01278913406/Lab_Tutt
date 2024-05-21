@@ -1,4 +1,3 @@
-import { ComponentBase } from './component-base';
 import { OnInit, Injector, ViewChild, ElementRef, HostListener, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
@@ -20,11 +19,11 @@ export abstract class SecondPageIndexBase {
     ids = [];
     total = 0;
     page = 1;
-    limit = 100;
+    limit = 10;
     limitAll = 10000;
     cols = [];
     isMultiEdit = false;
-    dataSource = [];
+    dataSource: any[] = [];
     dataExport = [];
     dataTotal = [];
     openSelectCheck = false;
@@ -43,12 +42,13 @@ export abstract class SecondPageIndexBase {
     ];
     trangThai = 1;
     listItemNumberPerPage = [
-        { label: '20', value: 20 },
-        { label: '50', value: 50 },
-        { label: '100', value: 100 },
-        { label: '200', value: 200 },
-        { label: '500', value: 500 },
-        { label: '1000', value: 1000 },
+        { value: 10, display: '10' },
+        { value: 20, display: '20' },
+        { value: 50, display: '50' },
+        { value: 100, display: '100' },
+        { value: 200, display: '200' },
+        { value: 500, display: '500' },
+        { value: 1000, display: '1000' },
     ];
 
 }

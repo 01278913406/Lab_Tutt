@@ -71,7 +71,7 @@
     <div class="col-lg-4 col-md-5 col-sm-12 col-xs-12">
       <!-- <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12"> -->
       <div class="login-container">
-        <form>
+        <form [formGroup]="formGroup">
           <input name="__RequestVerificationToken" type="hidden"
             value="myUueEtBqOEh-Hew_pWjD9AplHYjApUIRH-7lQWbUVTfIMd87yQCT4wt-P9h4hSMLuXvDaxJ0xgF2Hf9PFEeZXJgZ321lpK1L36a6GY807c1">
           <div class="logo"> <img src="/assets/images/icons/logo_BA.svg"></div>
@@ -82,15 +82,19 @@
               <img src="/assets/images/user-alt-1.svg">
             </div>
             <input type="text" class="form-control" placeholder="Tên đăng nhập" aria-label="Tên đăng nhập"
-              [(ngModel)]="objUserLogin.username" [ngModelOptions]="{standalone: true}" aria-describedby="basic-addon1"
-              name="Username" id="Username">
+              [(ngModel)]="objUserLogin.username" formControlName="userName" aria-describedby="basic-addon1">
           </div>
+          <!-- <div class="input-group text-center">
+            <div *ngIf="userName?.invalid && (userName?.dirty || userName?.touched)" class="text-danger">
+              <div *ngIf="userName?.errors?.['required']">Nhập tên đăng nhập.</div>
+            </div>
+          </div> -->
           <div class="input-group">
             <div class="input-group-text">
               <img src="/assets/images/password.svg">
             </div>
             <input [type]="passwordFieldType" class="form-control" id="password" placeholder="Mật khẩu"
-              [(ngModel)]="objUserLogin.password" [ngModelOptions]="{standalone: true}">
+              [(ngModel)]="objUserLogin.password" formControlName="password">
             <div class="input-group-text">
               <img src="/assets/images/eye-show.svg" (click)="togglePasswordVisibility()">
             </div>
@@ -129,3 +133,6 @@
     </div>
   </div>
 </div>
+
+
+<app-toast></app-toast>

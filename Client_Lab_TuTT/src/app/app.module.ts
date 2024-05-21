@@ -3,9 +3,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgxDaterangepickerBootstrapModule } from 'ngx-daterangepicker-bootstrap';
-import { provideDaterangepickerLocale } from 'ngx-daterangepicker-bootstrap';
-
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -19,6 +16,10 @@ import { UserListComponent } from './user-list/user-list.component';
 import { PaginationComponent } from './shared/pagination/pagination.component';
 import { SelectDropdownComponent } from './shared/select-dropdown/select-dropdown.component';
 import { DatepickerComponent } from './shared/datepicker/datepicker.component';
+import { ToastComponent } from './shared/toast/toast.component';
+import { ConfirmDialogComponent } from './shared/confirm-dialog/confirm-dialog.component';
+import { UserEditComponent } from './user-list/user-edit/user-edit.component';
+import { DateInputComponent } from './shared/date-input/date-input.component';
 
 
 
@@ -32,7 +33,11 @@ import { DatepickerComponent } from './shared/datepicker/datepicker.component';
     UserListComponent,
     PaginationComponent,
     SelectDropdownComponent,
-    DatepickerComponent
+    DatepickerComponent,
+    ToastComponent,
+    ConfirmDialogComponent,
+    UserEditComponent,
+    DateInputComponent
   ],
   imports: [
     BrowserModule,
@@ -40,17 +45,12 @@ import { DatepickerComponent } from './shared/datepicker/datepicker.component';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxDaterangepickerBootstrapModule,
     BrowserAnimationsModule,
   ],
   providers: [
     AuthService,
     UsersService,
     provideClientHydration(),
-    provideDaterangepickerLocale({
-      separator: ' - ',
-      applyLabel: 'Okay',
-    }),
   ],
   bootstrap: [AppComponent]
 })

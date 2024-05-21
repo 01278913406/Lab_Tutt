@@ -1,8 +1,10 @@
-import { Component, Inject, Injector, NgModule, PLATFORM_ID } from '@angular/core';
+import { Component, Inject, Injector, NgModule, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { UsersService } from '../lib-shared/services/users.service';
 import { AuthService } from '../lib-shared/auth/auth.service';
+import { ToastComponent } from '../shared/toast/toast.component';
 /**
  * Component login
  * tutt2 5/17/2024 created
@@ -13,7 +15,7 @@ import { AuthService } from '../lib-shared/auth/auth.service';
   styleUrl: './login.component.css'
 })
 
-export class LoginComponent {
+export class LoginComponent implements OnInit{
   errorMessage: string = "";
   passwordFieldType: string = 'password';
   objUserLogin: any = {
@@ -21,12 +23,21 @@ export class LoginComponent {
     password: '',
   };
 
+  formGroup: FormGroup = new FormGroup({});
+  @ViewChild(ToastComponent) toastComponent!: ToastComponent;
+
   constructor(
     @Inject(PLATFORM_ID) private platformId: object,
     protected _injector: Injector,
+    private formBuilder: FormBuilder,
     private _usersService: UsersService,
     private _authService: AuthService
   ) {
+    
+    this.formGroup = this.formBuilder.group({
+      userName: ['', [Validators.required]],
+      password: ['', [Validators.required, Validators.minLength(6)]]
+    });
   }
 
   async ngOnInit() {
@@ -45,9 +56,6 @@ export class LoginComponent {
         }
       })
     }
-    // console.log("page-login-onCheckUserLogin",Object.keys(currUser).length);
-    // if (this._authService.getCurrentUser() != null)
-    //   window.location.href = "/home";
   }
 
   /**
@@ -55,27 +63,38 @@ export class LoginComponent {
    * Determines whether check user login on
    */
   async onSubmitLogin() {
-    await this._usersService.Login(
-      this.objUserLogin
-    ).then(rs => {
-      if (rs != undefined) {
-        if (rs.status) {
-          this._authService.saveAccessToken(rs.data, 300);
-          window.location.href = "/nguoi-dung";
+    if (this.formGroup.valid) {
+      await this._usersService.Login(
+        this.objUserLogin
+      ).then(rs => {
+        if (rs != undefined) {
+          if (rs.status) {
+            this._authService.saveAccessToken(rs.data, 300);
+            window.location.href = "/nguoi-dung";
+          }
+          else {
+            this.errorMessage = rs.message;
+          }
         }
-        else {
-          this.errorMessage = rs.message;
-        }
-      }
-    });
+      }, error => {
+        this.toastComponent.showToast('Warning', 'Hệ thống dịch vụ đăng nhập đang gặp sự cố!.');
+      });
+    }
+    else{
+      this.toastComponent.showToast('Warning', 'Vui lòng nhập thông tin đăng nhập.');
+    }
   }
 
   /**
-   * Toggles password visibility
+   * ẩn hiện password
    * Determines whether check user login on
    */
   togglePasswordVisibility(): void {
     this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password';
   }
 
+
+  // get userName() { return this.formGroup.get('userName'); }
+  // get email() { return this.formGroup.get('email'); }
+  // get password() { return this.formGroup.get('password'); }
 }

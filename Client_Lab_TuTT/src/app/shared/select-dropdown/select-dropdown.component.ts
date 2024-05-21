@@ -6,9 +6,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrl: './select-dropdown.component.css'
 })
 export class SelectDropdownComponent {
-  @Input() options: { value: string, display: string }[] = [];
-  @Input() selectedValue: string = '';
-  @Output() selectionChange = new EventEmitter<string>();
+  @Input() options: { value: any, display: any }[] = [];
+  @Input() selectedValue: any = '';
+  @Output() selectionChange = new EventEmitter<any>();
 
   constructor() { }
 

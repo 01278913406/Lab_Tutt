@@ -1,4 +1,4 @@
-import { Component, Injector } from '@angular/core';
+import { Component, Injector, OnInit } from '@angular/core';
 
 import { User } from '../lib-shared/models/user';
 import { AuthService } from '../lib-shared/auth/auth.service';
@@ -12,7 +12,7 @@ import { AuthService } from '../lib-shared/auth/auth.service';
   styleUrl: './app-topbar.component.css'
 })
 
-export class AppTopbarComponent {
+export class AppTopbarComponent implements OnInit{
   isLogin: boolean = false;
   crrUser!: User | null;
 

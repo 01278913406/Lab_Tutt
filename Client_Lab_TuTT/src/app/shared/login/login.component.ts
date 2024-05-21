@@ -2,9 +2,9 @@ import { Component, Inject, Injector, NgModule, OnInit, PLATFORM_ID, ViewChild }
 import { isPlatformBrowser } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { UsersService } from '../lib-shared/services/users.service';
-import { AuthService } from '../lib-shared/auth/auth.service';
-import { ToastComponent } from '../shared/toast/toast.component';
+import { UsersService } from '../../lib-shared/services/users.service';
+import { AuthService } from '../../lib-shared/auth/auth.service';
+import { ToastComponent } from '../toast/toast.component';
 /**
  * Component login
  * tutt2 5/17/2024 created
@@ -15,7 +15,7 @@ import { ToastComponent } from '../shared/toast/toast.component';
   styleUrl: './login.component.css'
 })
 
-export class LoginComponent implements OnInit{
+export class LoginComponent implements OnInit {
   errorMessage: string = "";
   passwordFieldType: string = 'password';
   objUserLogin: any = {
@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit{
     private _usersService: UsersService,
     private _authService: AuthService
   ) {
-    
+
     this.formGroup = this.formBuilder.group({
       userName: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(6)]]
@@ -80,7 +80,7 @@ export class LoginComponent implements OnInit{
         this.toastComponent.showToast('Warning', 'Hệ thống dịch vụ đăng nhập đang gặp sự cố!.');
       });
     }
-    else{
+    else {
       this.toastComponent.showToast('Warning', 'Vui lòng nhập thông tin đăng nhập.');
     }
   }

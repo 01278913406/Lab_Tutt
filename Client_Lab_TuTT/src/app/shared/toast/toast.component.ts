@@ -1,16 +1,8 @@
 import { Component } from '@angular/core';
 import { Toast } from '../../lib-shared/models/toast';
+import { CONFIG_TOAST } from '../../config/toast.config';
 
-enum TitleToast {
-  Primary = "Primary",
-  Secondary = "Secondary",
-  Success = "Success",
-  Danger = "Danger",
-  Warning = "Warning",
-  Info = "Info",
-  Light = "Light",
-  Dark = "Dark"
-}
+
 
 @Component({
   selector: 'app-toast',
@@ -24,32 +16,32 @@ export class ToastComponent {
     const time = new Date().toLocaleTimeString();
     //let cssToast = "text-bg-light"
     switch (title) {
-      case TitleToast.Primary:
+      case CONFIG_TOAST.Primary:
         this.cssToast = "text-bg-primary";
         break;
-      case TitleToast.Secondary:
+      case CONFIG_TOAST.Secondary:
         this.cssToast = "text-bg-secondary";
         break;
-      case TitleToast.Success:
+      case CONFIG_TOAST.Success:
         this.cssToast = "text-bg-success";
         break;
-      case TitleToast.Danger:
+      case CONFIG_TOAST.Danger:
         this.cssToast = "text-bg-danger";
         break;
-      case TitleToast.Warning:
+      case CONFIG_TOAST.Warning:
         this.cssToast = "text-bg-warning";
         break;
-      case TitleToast.Info:
+      case CONFIG_TOAST.Info:
         this.cssToast = "text-bg-info";
         break;
-      case TitleToast.Dark:
+      case CONFIG_TOAST.Dark:
         this.cssToast = "text-bg-dark";
         break;
       default:
         this.cssToast = "text-bg-light";
     }
 
-    console.log("cssToast : ",  this.cssToast);
+    console.log("cssToast : ", this.cssToast);
     const toast = { title, message, time, show: true };
     this.toasts.push(toast);
 

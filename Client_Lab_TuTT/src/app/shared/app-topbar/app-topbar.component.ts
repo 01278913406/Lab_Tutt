@@ -1,7 +1,8 @@
 import { Component, Injector, OnInit } from '@angular/core';
+import { User } from '../../lib-shared/models/user';
+import { AuthService } from '../../lib-shared/auth/auth.service';
 
-import { User } from '../lib-shared/models/user';
-import { AuthService } from '../lib-shared/auth/auth.service';
+
 /**
  * Component thanh topbar
  * tutt2 17/05/2024
@@ -12,7 +13,7 @@ import { AuthService } from '../lib-shared/auth/auth.service';
   styleUrl: './app-topbar.component.css'
 })
 
-export class AppTopbarComponent implements OnInit{
+export class AppTopbarComponent implements OnInit {
   isLogin: boolean = false;
   crrUser!: User | null;
 
@@ -28,8 +29,7 @@ export class AppTopbarComponent implements OnInit{
   }
 
   //lấy thông tin người dùng đã đăng nhập
-  async getCurrentUser()
-  {
+  async getCurrentUser() {
     this.crrUser = await this._authService.getCurrentUser();
   }
 }

@@ -3,8 +3,8 @@
  * Copyright (c) 2016-2021 Rodziu <mateusz.rohde@gmail.com>
  * License: MIT
  */
-import DateExtended from 'date-extensions';
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
+import DateExtended from './date-extended';
 
 export interface IMonthName {
     name: string,

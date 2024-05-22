@@ -19,8 +19,8 @@ import { ConfirmDialogComponent } from './shared/confirm-dialog/confirm-dialog.c
 import { UserEditComponent } from './user-list/user-edit/user-edit.component';
 import { DateInputComponent } from './shared/date-input/date-input.component';
 import { AppTopbarComponent } from './shared/app-topbar/app-topbar.component';
-// import { DatePickerCalendarComponent } from './shared/datepicker/datepicker-calendar/date-picker-calendar.component';
-// import { DatePickerComponent } from './shared/datepicker/datepicker-component/date-picker.component';
+import { DatePickerCalendarComponent } from './shared/datepicker/datepicker-calendar/date-picker-calendar.component';
+import { DatePickerComponent } from './shared/datepicker/datepicker-component/date-picker.component';
 
 
 
@@ -38,8 +38,8 @@ import { AppTopbarComponent } from './shared/app-topbar/app-topbar.component';
     ConfirmDialogComponent,
     UserEditComponent,
     DateInputComponent,
-    // DatePickerCalendarComponent,
-    // DatePickerComponent,
+    DatePickerCalendarComponent,
+    DatePickerComponent,
   ],
   imports: [
     BrowserModule,

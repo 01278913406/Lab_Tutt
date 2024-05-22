@@ -14,7 +14,7 @@ import {
 } from '@angular/forms';
 import { AbstractEnabledDates } from '../abstract-enabled-dates';
 import { Subscription } from 'rxjs';
-import DateExtended from 'date-extensions';
+import DateExtended from '../date-extended';
 
 @Component({
     selector: 'datepicker',
@@ -30,7 +30,8 @@ import DateExtended from 'date-extensions';
             multi: true,
             useExisting: DatePickerComponent
         }
-    ]
+    ],
+    host: { ngSkipHydration: 'true' },
 })
 export class DatePickerComponent extends AbstractEnabledDates implements ControlValueAccessor, OnDestroy, Validator {
     @Input() format: string;

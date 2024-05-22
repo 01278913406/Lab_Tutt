@@ -4,7 +4,8 @@
  * License: MIT
  */
 
-import DateExtended from 'date-extensions';
+import DateExtended from "./date-extended";
+
 
 export type disabledDatesFn = (locals: { date: Date | string | number, mode: 'year' | 'month' | 'day' }) => boolean;
 

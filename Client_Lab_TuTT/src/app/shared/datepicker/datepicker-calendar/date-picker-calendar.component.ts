@@ -6,8 +6,8 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DatePickerConfigService } from '../date-picker-config.service';
-import DateExtended from 'date-extensions';
 import { AbstractEnabledDates } from '../abstract-enabled-dates';
+import DateExtended from '../date-extended';
 
 @Component({
     selector: 'datepicker-calendar',
@@ -18,7 +18,8 @@ import { AbstractEnabledDates } from '../abstract-enabled-dates';
             multi: true,
             useExisting: DatePickerCalendarComponent
         }
-    ]
+    ],
+    host: { ngSkipHydration: 'true' },
 })
 export class DatePickerCalendarComponent extends AbstractEnabledDates implements ControlValueAccessor, OnInit {
     @Input() modelFormat: string;

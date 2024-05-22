@@ -86,10 +86,9 @@ export abstract class BaseService {
      * @returns many
      * tutt2 5/17/2024 created 
      */
-    deleteMany(lstId: string): Promise<ResponseResult | undefined> {
-        const url = `${this.serviceUri}/DeleteMany/${lstId}`;
+    deleteMany(apiUrl: string, item: any): Promise<ResponseResult | undefined> {
         return this._http
-            .delete<ResponseResult>(url, this.headersOptions())
+            .delete<ResponseResult>(apiUrl)
             .pipe(retry(this.RETRY_COUNT)).toPromise();
     }
 

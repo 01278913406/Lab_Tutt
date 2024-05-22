@@ -30,7 +30,6 @@ export abstract class SecondPageIndexBase {
     sortField = '';
     isAsc = false;
     isLoading = false;
-    selectedItems = [];
     isCollapsed = false;
     isIgnoreClientCache = false;
     openColumnList = false;

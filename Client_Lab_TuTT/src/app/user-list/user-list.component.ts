@@ -4,6 +4,7 @@ import { UsersService } from '../lib-shared/services/users.service';
 import { User } from '../lib-shared/models/user';
 import { ToastComponent } from '../shared/toast/toast.component';
 import { SecondPageIndexBase } from '../lib-shared/classes/base/second-page-index-base';
+import { Gender_Options } from '../config/gender.config';
 
 
 
@@ -22,20 +23,24 @@ export class UserListComponent extends SecondPageIndexBase {
   };
   users: User[] = [];
 
+  //xóa một người dùng
   showDeleteDialog: boolean = false;    //hiển thị dialog xác nhận khi xóa
   confirmMessageDelete = '';
   selectedUserId: number | null = null; //UserId khi chọn xóa
 
+  //xóa nhiều người dùng
+  showMultiDeleteDialog: boolean = false;    //hiển thị dialog xác nhận khi xóa
+  confirmMessageMultiDelete = '';
+  
+
   showEditDialog: boolean = false;    //hiển thị trang cập nhật thông tin người dùng khi thêm mới or edit
   selectedUser: any = null;             //chọn người dùng khi chỉnh sửa
+  titleEditDialog: string = "Thêm mới người dùng"; //tiêu để form chỉnh sửa, thêm mới
   override dataSource: User[] = [];     //danh sách người dùng
 
-  genderOptions = [
-    { value: '', display: 'Chọn giới tính' },
-    { value: 'Nam', display: 'Nam' },
-    { value: 'Nữ', display: 'Nữ' },
-    { value: 'Chưa xác định', display: 'Chưa xác định' }
-  ];
+  selectedItems: number[] = [];
+
+  genderOptions = Gender_Options;
   @ViewChild(ToastComponent) toastComponent!: ToastComponent;
 
   constructor(private _usersService: UsersService) {
@@ -51,7 +56,7 @@ export class UserListComponent extends SecondPageIndexBase {
    * @returns data 
    */
   async getData() {
-   await this._usersService.GetUsersClient(this.searchModel.key, this.searchModel.gender, this.searchModel.fromDate, this.searchModel.toDate, this.page, this.limit
+    await this._usersService.GetUsersClient(this.searchModel.key, this.searchModel.gender, this.searchModel.fromDate, this.searchModel.toDate, this.page, this.limit
     ).then(rs => {
       if (rs != undefined && rs.status) {
         this.dataSource = rs.data;
@@ -63,6 +68,17 @@ export class UserListComponent extends SecondPageIndexBase {
     }, error => {
       this.toastComponent.showToast('Danger', 'Hệ thống dịch vụ lấy danh sách người dùng đang gặp sự cố!');
     });
+  }
+
+  //sự kiện chọn trong checkbox
+  toggleSelection(itemId: number) {
+    const index = this.selectedItems.indexOf(itemId);
+    if (index === -1) {
+      this.selectedItems.push(itemId);
+    } else {
+      this.selectedItems.splice(index, 1);
+    }
+    console.log("aaaa", itemId);
   }
 
   /**
@@ -77,20 +93,31 @@ export class UserListComponent extends SecondPageIndexBase {
    * @returns user 
    */
   async deleteUser(user: User): Promise<void> {
-    console.log("Xóa người dùng", JSON.stringify(user));
     this.confirmMessageDelete = "Xác nhận xóa người dùng: " + user.username;
     this.selectedUserId = user.id;
     this.showDeleteDialog = true;
 
   }
 
-  openEditModal(user: User): void {
-    this.selectedUser = user;
-    this.showEditDialog = true;
+  //xóa nhiều người dùng
+  async onDeleteMultiUser(): Promise<void> {
+    if (this.selectedItems.length) {
+      this.confirmMessageMultiDelete = "Xác nhận xóa danh sách người dùng khỏi hệ thống?";
+      this.showMultiDeleteDialog = true;
+    }
+    else
+      this.toastComponent.showToast('Warning', "Chưa chọn người dùng!");
   }
+  //sự kiện thêm mới người dùng hoặc chỉnh sửa thông tin người dùng
+  async openEditModal(user: User | null): Promise<void> {
+    if (user) {
+      this.selectedUser = user;
+      this.titleEditDialog = "Cập nhật thông tin người dùng - " + user.username;
+    }
+    else
+      this.titleEditDialog = "Thêm người dùng mới";
 
-  onDateRangeChanged(event: any) {
-    console.log('Date range changed:', event);
+    this.showEditDialog = true;
   }
 
   //sự kiện thay đổi trang khi người dùng chọn trang ở pagination
@@ -120,7 +147,6 @@ export class UserListComponent extends SecondPageIndexBase {
     if (result && this.selectedUserId !== null) {
       await this._usersService.DeleteUserById(this.selectedUserId).then(rs => {
         if (rs != undefined && rs.status) {
-          console.log("kết quả xóa người dung:", JSON.stringify(rs))
           this.getData();
           this.toastComponent.showToast('Success', rs.message);
         }
@@ -135,28 +161,41 @@ export class UserListComponent extends SecondPageIndexBase {
     this.selectedUserId = null;
   }
 
-  handleSave(updatedUser: any): void {
-    this.showEditDialog = false;
-    this.selectedUser = null;
-    // this.userService.updateUser(updatedUser).subscribe(() => {
-    //   this.loadUsers();
-    //   this.showEditDialog = false;
-    //   this.selectedUser = null;
-    // });
+  async handleMultiDeleteConfirm(result: boolean): Promise<void> {
+    if (result && this.selectedItems.length >0) {
+      await this._usersService.DeleteMultiUser(this.selectedItems).then(rs => {
+        if (rs != undefined && rs.status) {
+          this.getData();
+          this.toastComponent.showToast('Success', rs.message);
+        }
+        else {
+          this.toastComponent.showToast('Warning', rs?.message ? rs?.message : "Dịch vụ xóa người dùng đang gặp sự cố!");
+        }
+      }, error => {
+        this.toastComponent.showToast('Danger', 'Dịch vụ xóa người dùng đang gặp sự cố!');
+      });
+    }
+    this.showMultiDeleteDialog= false;
+    this.selectedItems = [];
   }
 
+  //khi người dùng chọn cập nhật ở form cập nhật người dùng
+  handleSave(result: any): void {
+    if (result != undefined && result.status) {
+      this.getData();
+      this.toastComponent.showToast('Success', result.message);
+    }
+    else {
+      this.toastComponent.showToast('Warning', result?.message ? result?.message : "Dịch vụ cập nhật người dùng đang gặp sự cố!");
+    }
+    this.showEditDialog = false;
+    this.selectedUser = null;
+  }
+  //khi người dùng chọn hủy ở form cập nhật người dùng
   handleCancel(): void {
     this.showEditDialog = false;
     this.selectedUser = null;
   }
 
-  formatDate(event: any): void {
-    const selectedDate = new Date(event.target.value);
-    this.searchModel.fromDate = selectedDate.toISOString().substring(0, 10);
-    const year = selectedDate.getFullYear();
-  const month = (selectedDate.getMonth() + 1).toString().padStart(2, '0');
-  const day = selectedDate.getDate().toString().padStart(2, '0');
-  this.searchModel.fromDate =`${year}-${month}-${day}`;
-    console.log("ngay bat dau: ", `${year}-${month}-${day}`);
-  }
+
 }

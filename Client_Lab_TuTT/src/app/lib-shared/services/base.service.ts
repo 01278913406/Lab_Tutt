@@ -4,6 +4,8 @@ import { ResponseResult } from '../models/response-result';
 import { shareReplay } from 'rxjs/internal/operators/shareReplay';
 import { retry } from 'rxjs/internal/operators/retry';
 import { catchError } from 'rxjs/internal/operators/catchError';
+import { environment } from '../../../environments/environment';
+import { isPlatformBrowser } from '@angular/common';
 
 /**
  * Service cơ bản để kết nối dịch vụ api backend
@@ -15,7 +17,7 @@ export abstract class BaseService {
     _injector: Injector;
 
     serviceUri = '';
-
+    
     readonly RETRY_COUNT: number = 0;
     readonly REPLAY_COUNT: number = 1;
     readonly LIMIT_DEFAULT: number = 1000;
@@ -23,7 +25,7 @@ export abstract class BaseService {
     constructor(
         http: HttpClient
         , injector: Injector
-        , serviceUri: string
+        , serviceUri: string,
     ) {
         this._http = http;
         this._injector = injector;
@@ -169,12 +171,27 @@ export abstract class BaseService {
      * tutt2 5/17/2024 created
      */
     headersOptions() {
-        const httpOptions = {
+        let httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*'
             })
         };
+       
+        // let strAccessToken:any;
+        // const user = localStorage.getItem(environment.caches.USER_KEY);
+        // if (user) {
+        //     strAccessToken = JSON.parse(user);
+        // }
+        // if (strAccessToken) {
+        //     httpOptions = {
+        //         headers: new HttpHeaders({
+        //             'Content-Type': 'application/json',
+        //             'Access-Control-Allow-Origin': '*',
+        //             'Authorization': `Bearer ${strAccessToken.token}`
+        //         })
+        //     };
+        // }
         return httpOptions;
     }
 }

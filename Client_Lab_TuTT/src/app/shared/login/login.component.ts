@@ -2,7 +2,6 @@ import { Component, Inject, Injector, NgModule, OnInit, PLATFORM_ID, ViewChild }
 import { isPlatformBrowser } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { UsersService } from '../../lib-shared/services/users.service';
 import { AuthService } from '../../lib-shared/auth/auth.service';
 import { ToastComponent } from '../toast/toast.component';
 /**
@@ -30,7 +29,6 @@ export class LoginComponent implements OnInit {
     @Inject(PLATFORM_ID) private platformId: object,
     protected _injector: Injector,
     private _formBuilder: FormBuilder,
-    private _usersService: UsersService,
     private _authService: AuthService
   ) {
 
@@ -64,7 +62,7 @@ export class LoginComponent implements OnInit {
    */
   async onSubmitLogin() {
     if (this.formGroup.valid) {
-      await this._usersService.Login(
+      await this._authService.Login(
         this.objUserLogin
       ).then(rs => {
         if (rs != undefined) {

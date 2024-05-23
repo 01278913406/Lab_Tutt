@@ -10,7 +10,11 @@ import moment from 'moment';
  */
 @Injectable()
 export class UsersService extends BaseService {
-    constructor(http: HttpClient, injector: Injector, @Inject(PLATFORM_ID) private platformId: any) {
+    constructor(
+        http: HttpClient, 
+        injector: Injector, 
+        @Inject(PLATFORM_ID) private platformId: any
+    ) {
         super(http, injector, `${environment.apiDomain.LABTuttEndPoint}/User`);
     }
     // lấy tất cả danh sách người dùng
@@ -28,16 +32,7 @@ export class UsersService extends BaseService {
         return this.defaultGet(queryString);
     }
 
-    /**
-     * Kiểm tra thông tin đăng nhập người dùng
-     * @param itemUser 
-     * @returns  
-     * tutt2 5/16/2024 created
-     */
-    Login(itemUser: any) {
-        const queryString = `${this.serviceUri}/login`;
-        return this.defaultPost(queryString, itemUser);
-    }
+    
 
     /**
      * Deletes user by id

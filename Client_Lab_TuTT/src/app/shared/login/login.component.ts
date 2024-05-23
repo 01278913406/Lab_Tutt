@@ -17,7 +17,7 @@ import { ToastComponent } from '../toast/toast.component';
 
 export class LoginComponent implements OnInit {
   errorMessage: string = "";
-  passwordFieldType: string = 'password';
+  passwordFieldType: string = 'password';  //type để ẩn hiện
   objUserLogin: any = {
     username: '',
     password: '',
@@ -29,12 +29,12 @@ export class LoginComponent implements OnInit {
   constructor(
     @Inject(PLATFORM_ID) private platformId: object,
     protected _injector: Injector,
-    private formBuilder: FormBuilder,
+    private _formBuilder: FormBuilder,
     private _usersService: UsersService,
     private _authService: AuthService
   ) {
 
-    this.formGroup = this.formBuilder.group({
+    this.formGroup = this._formBuilder.group({
       userName: ['', Validators.required],
       password: ['', Validators.required]
     });
@@ -92,9 +92,4 @@ export class LoginComponent implements OnInit {
   togglePasswordVisibility(): void {
     this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password';
   }
-
-
-  // get userName() { return this.formGroup.get('userName'); }
-  // get email() { return this.formGroup.get('email'); }
-  // get password() { return this.formGroup.get('password'); }
 }

@@ -32,4 +32,12 @@ export class AppTopbarComponent implements OnInit {
   async getCurrentUser() {
     this.crrUser = await this._authService.getCurrentUser();
   }
+
+  //đăng xuất
+  logout() {
+    // Perform logout logic here
+    // Clear user data from localStorage or any other storage
+    this._authService.removeUser();
+    window.location.href = "/login";
+  }
 }

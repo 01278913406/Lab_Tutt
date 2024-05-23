@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './shared/login/login.component';
-import { AppFooterComponent } from './shared/components/app-footer/app-footer.component';
+import { AppFooterComponent } from './shared/app-footer/app-footer.component';
 import { AuthService } from './lib-shared/auth/auth.service';
 import { HomeComponent } from './home/home.component';
 import { UsersService } from './lib-shared/services/users.service';

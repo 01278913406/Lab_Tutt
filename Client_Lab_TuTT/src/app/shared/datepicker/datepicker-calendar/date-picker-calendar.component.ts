@@ -3,7 +3,7 @@
  * Copyright (c) 2016-2021 Rodziu <mateusz.rohde@gmail.com>
  * License: MIT
  */
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DatePickerConfigService } from '../date-picker-config.service';
 import { AbstractEnabledDates } from '../abstract-enabled-dates';
@@ -12,6 +12,7 @@ import DateExtended from '../date-extended';
 @Component({
     selector: 'datepicker-calendar',
     templateUrl: './date-picker-calendar.component.html',
+    styleUrl: './date-picker-calendar.component.css',
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
@@ -34,6 +35,7 @@ export class DatePickerCalendarComponent extends AbstractEnabledDates implements
     @Input() set maxDate(date: string | Date | undefined) {
         this._maxDate = this.unknownToDate(date);
     }
+    @Output() onSelectDate = new EventEmitter<any>();
 
     displayMode: 'months' | 'days' | 'years' = 'days';
     daysData: DateExtended[][] = [];
@@ -218,6 +220,7 @@ export class DatePickerCalendarComponent extends AbstractEnabledDates implements
                 this.currentDate = date;
                 this.currentDisplayDate = date;
                 this.buildCalendar();
+                this.onSelectDate.emit(true);
                 break;
             case 'month':
                 this.currentDisplayDate.setMonth(date.getMonth());
@@ -233,5 +236,6 @@ export class DatePickerCalendarComponent extends AbstractEnabledDates implements
                 this.changeMode('months');
                 break;
         }
+       
     }
 }

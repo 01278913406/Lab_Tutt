@@ -1,20 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-.topbar {
-    font-size: 14px;
-    background: #0d2d6c;
-    font-family: "Roboto";
-    line-height: 1.5;
-    color: #fff;
-    font-weight: 500;
-    overflow-x: hidden;
-    margin-bottom: 24px;
-}
 
-.nav-link {
-    color: #fff;
-    font-size: 15px;
-    font-weight: 700;
-}
 
 .carousel-item {
     max-height: 600px;

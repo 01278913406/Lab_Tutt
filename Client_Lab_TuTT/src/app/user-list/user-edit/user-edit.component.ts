@@ -6,7 +6,11 @@ import { UsersService } from '../../lib-shared/services/users.service';
 import { ToastComponent } from '../../shared/toast/toast.component';
 import { User } from '../../lib-shared/models/user';
 import { ageValidator, minimumAgeAsyncValidator } from '../../lib-shared/classes/form-validators';
-
+import DateExtended from '../../shared/datepicker/date-extended';
+import moment from 'moment';
+/**
+ * Component thêm mới, cập nhật thông tin người dùng
+ */
 @Component({
   selector: 'app-user-edit',
   templateUrl: './user-edit.component.html',
@@ -17,19 +21,20 @@ export class UserEditComponent {
   @Input() user: any = null;
   @Output() save = new EventEmitter<any>();
   @Output() cancel = new EventEmitter<void>();
+  
   editUserForm: FormGroup;
 
   isEdit: boolean = false; // ẩn hiện trạng tái với trường hợp thêm mới và chỉnh sửa người dùng
-  genderOptions = Gender_Options;
-  passwordFieldType: string = 'password';
-  confimPasswordFieldType: string = 'password';
+  genderOptions = Gender_Options; //options chọn giới tính
+  passwordFieldType: string = 'password'; //ẩn hiện mật khẩu
+  confimPasswordFieldType: string = 'password'; //ẩn hiện xác nhận mật khẩu
 
   @ViewChild(ToastComponent) toastComponent!: ToastComponent;
   constructor(
-    private fb: FormBuilder,
+    private __formBuilder: FormBuilder,
     private _usersService: UsersService
   ) {
-    this.editUserForm = this.fb.group({
+    this.editUserForm = this.__formBuilder.group({
       id: [-1],
       username: ['', [Validators.required, Validators.maxLength(50)]],
       password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(100)]],
@@ -39,14 +44,6 @@ export class UserEditComponent {
       gender: ['', Validators.required],
       birthDate: ['', [Validators.required, ageValidator(18)]],
       confimPassword: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(100)]]
-      // id: [''],
-      // username: ['', Validators.required, Validators.maxLength(50)],
-      // password: ['', Validators.required],
-      // fullName: ['', Validators.required, Validators.maxLength(200)],
-      // phoneNumber: ['', Validators.required],
-      // email: ['', [Validators.required, Validators.email]],
-      // gender: ['', Validators.required],
-      // birthDate: ['', [Validators.required]]
     });
   }
 
@@ -54,17 +51,16 @@ export class UserEditComponent {
     this.onLoadData();
   }
 
+  //load dữ liệu khi thay đổi thông tin người dùng
   onLoadData(): void {
     if (this.user) {
       this.isEdit = true;
       this.setFormValues(this.user);
     }
-   
+
   }
 
   setFormValues(user: User): void {
-    // Format the date before setting it to the form control
-    const formattedDate = this.formatDate(user.birthDate);
     this.editUserForm.patchValue({
       id: user.id,
       username: user.username,
@@ -72,7 +68,8 @@ export class UserEditComponent {
       phoneNumber: user.phoneNumber,
       email: user.email,
       gender: user.gender,
-      birthDate: formattedDate
+      birthDate: user.birthDate
+      //this.formatDate(user.birthDate)
     });
     //xóa Validators password và xác nhận password đối với trường hợp cập nhật thông tin 
     this.editUserForm.controls["password"].clearValidators();
@@ -90,16 +87,27 @@ export class UserEditComponent {
     return `${day}/${month}/${year}`;
   }
 
-  //chuyển đổi định dạng ngày để call api
-  formatDateToBackend(date: string): string {
-    const [day, month, year] = date.split('/');
-    return `${year}-${month}-${day}`;
+ 
+ //dịnh dạng ngày tháng ô tìm kiếm đến ngày
+ displaybirthDateFormatter = (date: DateExtended): string => {
+  if (!date.isValid()) {
+    return 'ngày/tháng/năm';
   }
+  return `${date.format('d/m/Y')}`;
+};
 
-  //sự kiện click nút cập nhật
+  /**
+   * Determines whether save on
+   * @returns save 
+   */
   async onSave(): Promise<void> {
     if (this.editUserForm.valid) {
-
+      //trường hợp thêm mới kiểm tra mật khẩu và mật khẩu xác nhận có trùng nhau không
+      if (!this.isEdit && this.editUserForm.value.password != this.editUserForm.value.confimPassword) {
+        this.toastComponent.showToast('Warning', "Mật khẩu và mật khẩu xác nhận phải giống nhau!");
+        return;
+      }
+      //tạo modelEdit chứa thông tin người dùng tạo mới hoặc cập nhật để truyền vào api
       const modelEdit: any = {
         id: this.editUserForm.value.id,
         username: this.editUserForm.value.username,
@@ -108,8 +116,9 @@ export class UserEditComponent {
         phoneNumber: this.editUserForm.value.phoneNumber,
         email: this.editUserForm.value.email,
         gender: this.editUserForm.value.gender,
-        birthDate: this.formatDateToBackend(this.editUserForm.value.birthDate)
+        birthDate: moment(this.editUserForm.value.birthDate).format('YYYY-MM-DD') 
       };
+      //call api save người dùng
       await this._usersService.SaveUser(modelEdit).then(rs => {
         if (rs != undefined && rs.status) {
           this.save.emit(rs);
@@ -141,10 +150,7 @@ export class UserEditComponent {
     this.confimPasswordFieldType = this.confimPasswordFieldType === 'password' ? 'text' : 'password';
   }
 
-  // checkInvalid(){
-  //   let pasword = this.editUserForm.value.password
-  //   if(pasword.)
-  // }
+
   get birthDate() {
     return this.editUserForm.get('birthDate');
   }

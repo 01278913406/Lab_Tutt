@@ -1,20 +1,20 @@
 import { Component } from '@angular/core';
 import { Toast } from '../../lib-shared/models/toast';
 import { CONFIG_TOAST } from '../../config/toast.config';
-
-
-
+/**
+ * Component toast để hiển thị thông báo
+ */
 @Component({
   selector: 'app-toast',
   templateUrl: './toast.component.html',
   styleUrl: './toast.component.css'
 })
+
 export class ToastComponent {
   toasts: Toast[] = [];
   cssToast = "text-bg-light";
   showToast(title: string, message: string): void {
     const time = new Date().toLocaleTimeString();
-    //let cssToast = "text-bg-light"
     switch (title) {
       case CONFIG_TOAST.Primary:
         this.cssToast = "text-bg-primary";
@@ -40,8 +40,6 @@ export class ToastComponent {
       default:
         this.cssToast = "text-bg-light";
     }
-
-    console.log("cssToast : ", this.cssToast);
     const toast = { title, message, time, show: true };
     this.toasts.push(toast);
 

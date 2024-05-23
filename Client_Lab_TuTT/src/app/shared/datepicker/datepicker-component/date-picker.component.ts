@@ -191,4 +191,8 @@ export class DatePickerComponent extends AbstractEnabledDates implements Control
 
         return forceValid ? null : date;
     }
+    async handleSelectDate(result: boolean): Promise<void> {
+        if (result)
+            this.isOpen = false;
+    }
 }

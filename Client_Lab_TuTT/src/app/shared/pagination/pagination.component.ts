@@ -1,20 +1,16 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 /**
- * Phân trang
+ * Component Phân trang
  */
 @Component({
   selector: 'app-pagination',
   templateUrl: './pagination.component.html',
   styleUrl: './pagination.component.css'
 })
-
 export class PaginationComponent {
-  @Input()
-  currentPage!: number;
-  // @Input()
-  // totalPages!: number;
-  @Input()
-  totalItems!: number;
+  @Input() currentPage!: number;
+  @Input() pageSize!: number;
+  @Input() totalItems!: number;
   @Output() pageChange = new EventEmitter<number>();
 
   pages: number[] = [];
@@ -29,7 +25,7 @@ export class PaginationComponent {
   }
 
   get totalPages(): number {
-    return Math.ceil(this.totalItems / this.currentPage);
+    return Math.ceil(this.totalItems / this.pageSize);
   }
 
   updatePages() {
@@ -62,30 +58,4 @@ export class PaginationComponent {
   isLastPage(): boolean {
     return this.currentPage === this.totalPages;
   }
-  // @Input()
-  // currentPage!: number;
-  // @Input()
-  // itemsPerPage!: number;
-  // @Input()
-  // totalItems!: number;
-
-  // @Output() pageChanged: EventEmitter<number> = new EventEmitter();
-
-
-  // constructor() { }
-
-  // get totalPages(): number {
-  //   return Math.ceil(this.totalItems / this.itemsPerPage);
-  // }
-
-  // changePage(page: number): void {
-  //   if (page >= 1 && page <= this.totalPages) {
-  //     this.currentPage = page;
-  //     this.pageChanged.emit(page);
-  //   }
-  // }
-
-  // pageNumbers(): number[] {
-  //   return Array.from({ length: this.totalPages }, (_, index) => index + 1);
-  // }
 }

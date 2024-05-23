@@ -5,14 +5,20 @@ import { User } from '../lib-shared/models/user';
 import { ToastComponent } from '../shared/toast/toast.component';
 import { SecondPageIndexBase } from '../lib-shared/classes/base/second-page-index-base';
 import { Gender_Options } from '../config/gender.config';
+import DateExtended from '../shared/datepicker/date-extended';
+import { FormControl } from '@angular/forms';
 
 
-
+/**
+ * Component danh sách người dùng
+ *  * tutt2 5/20/2024 created
+ */
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
   styleUrl: './user-list.component.css'
 })
+
 export class UserListComponent extends SecondPageIndexBase {
   //thông tin tìm kiếm
   searchModel: any = {
@@ -30,15 +36,17 @@ export class UserListComponent extends SecondPageIndexBase {
 
   //xóa nhiều người dùng
   showMultiDeleteDialog: boolean = false;    //hiển thị dialog xác nhận khi xóa
-  confirmMessageMultiDelete = '';
-  
+  confirmMessageMultiDelete = '';            // 
 
+  maxFromDateControl = new FormControl((new DateExtended()).format('Y-m-d'));
+
+  
   showEditDialog: boolean = false;    //hiển thị trang cập nhật thông tin người dùng khi thêm mới or edit
   selectedUser: any = null;             //chọn người dùng khi chỉnh sửa
   titleEditDialog: string = "Thêm mới người dùng"; //tiêu để form chỉnh sửa, thêm mới
   override dataSource: User[] = [];     //danh sách người dùng
 
-  selectedItems: number[] = [];
+  selectedItems: number[] = [];  //list ai khi chọn xóa nhiều người dùng
 
   genderOptions = Gender_Options;
   @ViewChild(ToastComponent) toastComponent!: ToastComponent;
@@ -161,6 +169,11 @@ export class UserListComponent extends SecondPageIndexBase {
     this.selectedUserId = null;
   }
 
+  /**
+   * Handles xác nhận xóa nhiều user
+   * @param result 
+   * @returns multi delete confirm 
+   */
   async handleMultiDeleteConfirm(result: boolean): Promise<void> {
     if (result && this.selectedItems.length >0) {
       await this._usersService.DeleteMultiUser(this.selectedItems).then(rs => {
@@ -197,5 +210,18 @@ export class UserListComponent extends SecondPageIndexBase {
     this.selectedUser = null;
   }
 
-
+  // định dang ngày tháng ô tìm kiếm từ ngày
+  displayFromDateFormatter = (date: DateExtended): string => {
+    if (!date.isValid()) {
+      return 'Từ ngày';
+    }
+    return `${date.format('d/m/Y')}`;
+  };
+  //dịnh dạng ngày tháng ô tìm kiếm đến ngày
+  displayToDateFormatter = (date: DateExtended): string => {
+    if (!date.isValid()) {
+      return 'Đến ngày';
+    }
+    return `${date.format('d/m/Y')}`;
+  };
 }

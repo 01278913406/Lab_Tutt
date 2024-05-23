@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -21,6 +21,7 @@ import { DateInputComponent } from './shared/date-input/date-input.component';
 import { AppTopbarComponent } from './shared/app-topbar/app-topbar.component';
 import { DatePickerCalendarComponent } from './shared/datepicker/datepicker-calendar/date-picker-calendar.component';
 import { DatePickerComponent } from './shared/datepicker/datepicker-component/date-picker.component';
+import { AuthorizationIntercepter } from './lib-shared/intercepters/authorization-intercepter';
 
 
 
@@ -50,6 +51,11 @@ import { DatePickerComponent } from './shared/datepicker/datepicker-component/da
     BrowserAnimationsModule,
   ],
   providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthorizationIntercepter,
+      multi: true
+    },
     AuthService,
     UsersService,
     provideClientHydration(),

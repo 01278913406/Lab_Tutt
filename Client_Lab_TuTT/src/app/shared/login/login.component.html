@@ -82,7 +82,7 @@
               <img src="/assets/images/user-alt-1.svg">
             </div>
             <input type="text" class="form-control" placeholder="Tên đăng nhập" aria-label="Tên đăng nhập"
-              [(ngModel)]="objUserLogin.username" formControlName="userName" aria-describedby="basic-addon1">
+              formControlName="userName" aria-describedby="basic-addon1">
           </div>
           <!-- <div class="input-group text-center">
             <div *ngIf="userName?.invalid && (userName?.dirty || userName?.touched)" class="text-danger">
@@ -94,7 +94,7 @@
               <img src="/assets/images/password.svg">
             </div>
             <input [type]="passwordFieldType" class="form-control" id="password" placeholder="Mật khẩu"
-              [(ngModel)]="objUserLogin.password" formControlName="password">
+              formControlName="password">
             <div class="input-group-text">
               <img src="/assets/images/eye-show.svg" (click)="togglePasswordVisibility()">
             </div>

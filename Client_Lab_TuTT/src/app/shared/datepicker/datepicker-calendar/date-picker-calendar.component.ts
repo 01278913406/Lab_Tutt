@@ -130,6 +130,7 @@ export class DatePickerCalendarComponent extends AbstractEnabledDates implements
                     firstDay.add(1);
                 }
             }
+          
         } else {
             this.yearsData = [];
             const firstYear = Math.floor(this.currentDisplayDate.getFullYear() / 12) * 12;
@@ -142,6 +143,7 @@ export class DatePickerCalendarComponent extends AbstractEnabledDates implements
                 this.yearsData.push(row);
             }
         }
+      
     }
 
     changeMode(mode: 'months' | 'days' | 'years'): void {

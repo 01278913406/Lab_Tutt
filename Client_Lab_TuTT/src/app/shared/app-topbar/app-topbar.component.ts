@@ -1,6 +1,8 @@
 import { Component, Injector, OnInit } from '@angular/core';
 import { User } from '../../lib-shared/models/user';
 import { AuthService } from '../../lib-shared/auth/auth.service';
+import { EventEmitterService } from '../../lib-shared/services/event-emitter.service';
+import { Subscription } from 'rxjs';
 
 
 /**
@@ -16,18 +18,31 @@ import { AuthService } from '../../lib-shared/auth/auth.service';
 export class AppTopbarComponent implements OnInit {
   isLogin: boolean = false;
   crrUser!: User | null;
+  private eventSubjectLogin: Subscription = new Subscription;
 
   constructor(
     protected _injector: Injector,
+    private _eventEmitterService: EventEmitterService,
     private _authService: AuthService,
   ) {
   }
 
   async ngOnInit() {
-    //lấy thông tin người dùng đã đăng nhập
-    this.getCurrentUser()
+    this.emitEventLogin();
+    await this.getCurrentUser();
+  }
+  ngOnDestroy() {
+    if (this.eventSubjectLogin) {
+      this.eventSubjectLogin.unsubscribe();
+    }
   }
 
+  //dùng để truyền thông tin người dùng khi đăng nhập thành công trang login
+  emitEventLogin(){
+    this.eventSubjectLogin = this._eventEmitterService.eventLogin$.subscribe(event => {
+      this.crrUser = event;
+    });
+  }
   //lấy thông tin người dùng đã đăng nhập
   async getCurrentUser() {
     this.crrUser = await this._authService.getCurrentUser();

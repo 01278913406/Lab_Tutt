@@ -18,7 +18,7 @@ const locales: any = {
         dayShortNames: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
     }
 };
-let defaultLocale = 'vi-vn';
+let defaultLocale = 'en-us';
 
 export interface DateExtendedLocale {
     monthNames: string[],

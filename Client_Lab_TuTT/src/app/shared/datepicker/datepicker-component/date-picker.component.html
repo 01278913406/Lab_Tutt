@@ -8,11 +8,11 @@
             <i class="fa-solid fa-calendar-days" (click)="isOpen = true"></i>
         </span>
     </div>
-    <ul class="dropdown-menu" (click)="$event.stopPropagation()" [ngClass]="{'show': isOpen}">
+    <ul class="dropdown-menu" [ngClass]="{'show': isOpen}" (click)="$event.stopPropagation()">
         <li *ngIf="isOpen">
             <datepicker-calendar [formControl]="calendarControl" [minDate]="_minDate" [maxDate]="_maxDate"
                 [modelFormat]="modelFormat" [disabledDates]="disabledDates" [monthPicker]="monthPicker"
-                [weekPicker]="weekPicker"  (onSelectDate)="handleSelectDate($event)">
+                [weekPicker]="weekPicker" (onSelectDate)="handleSelectDate($event)">
             </datepicker-calendar>
         </li>
     </ul>

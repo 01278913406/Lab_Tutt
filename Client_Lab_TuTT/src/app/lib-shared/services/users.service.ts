@@ -28,11 +28,8 @@ export class UsersService extends BaseService {
             tDate = moment(toDate).format('YYYY-MM-DD');
         }
         const queryString = `${this.serviceUri}?key=${key}&gender=${gender}&fromDate=${fDate}&toDate=${tDate}&page=${page}&pageSize=${pageSize}`;
-        console.log("endpoint: ", queryString);
         return this.defaultGet(queryString);
     }
-
-    
 
     /**
      * Deletes user by id
@@ -44,17 +41,21 @@ export class UsersService extends BaseService {
         return this.defaultDelete(queryString);
     }
 
-   
-    DeleteMultiUser(item: any) {
+   /**
+    * Deletes multi user
+    * @param item 
+    * @returns  
+    */
+   DeleteMultiUser(item: any) {
         const queryString = `${this.serviceUri}/DeleteMultiUser`;
         return this.defaultPost(queryString,item);
     }
 
-    UpdateUser(item: any) {
-        const queryString = `${this.serviceUri}/UpdateUser`;
-        return this.defaultPost(queryString, item);
-    }
-
+    /**
+     * Saves user
+     * @param item 
+     * @returns  
+     */
     SaveUser(item: any) {
         const queryString = `${this.serviceUri}/SaveUser`;
         return this.defaultPost(queryString, item);

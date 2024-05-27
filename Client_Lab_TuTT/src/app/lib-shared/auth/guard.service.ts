@@ -14,6 +14,7 @@ export const GuardService: CanActivateFn = async (route, state) => {
 
   return new Promise(async resolve => {
     await authService.getCurrentUser().then(rs => {
+      console.log("kết quả trả về", rs)
       if (rs) {
         resolve(true);
         return ;

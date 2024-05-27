@@ -1,9 +1,14 @@
 import { Component, Inject, Injector, NgModule, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { AuthService } from '../../lib-shared/auth/auth.service';
 import { ToastComponent } from '../toast/toast.component';
+import { EventEmitterService } from '../../lib-shared/services/event-emitter.service';
+import { jwtDecode } from 'jwt-decode';
+import { User } from '../../lib-shared/models/user';
+
 /**
  * Component login
  * tutt2 5/17/2024 created
@@ -17,10 +22,6 @@ import { ToastComponent } from '../toast/toast.component';
 export class LoginComponent implements OnInit {
   errorMessage: string = "";
   passwordFieldType: string = 'password';  //type để ẩn hiện
-  objUserLogin: any = {
-    username: '',
-    password: '',
-  };
 
   formGroup: FormGroup = new FormGroup({});
   @ViewChild(ToastComponent) toastComponent!: ToastComponent;
@@ -28,6 +29,8 @@ export class LoginComponent implements OnInit {
   constructor(
     @Inject(PLATFORM_ID) private platformId: object,
     protected _injector: Injector,
+    private _router: Router,
+    private _eventEmitterService: EventEmitterService,
     private _formBuilder: FormBuilder,
     private _authService: AuthService
   ) {
@@ -50,7 +53,7 @@ export class LoginComponent implements OnInit {
     if (isPlatformBrowser(this.platformId)) {
       this._authService.getCurrentUser().then(rs => {
         if (rs) {
-          window.location.href = "/home";
+          this._router.navigate(['/nguoi-dung']);
         }
       })
     }
@@ -63,12 +66,13 @@ export class LoginComponent implements OnInit {
   async onSubmitLogin() {
     if (this.formGroup.valid) {
       await this._authService.Login(
-        this.objUserLogin
+        this.formGroup.value
       ).then(rs => {
         if (rs != undefined) {
           if (rs.status) {
-            this._authService.saveAccessToken(rs.data, 300);
-            window.location.href = "/nguoi-dung";
+            this.emitEventLogin(rs.data.token);
+            this._authService.saveAccessToken(rs.data);
+            this._router.navigate(['/nguoi-dung']);
           }
           else {
             this.errorMessage = rs.message;
@@ -79,7 +83,21 @@ export class LoginComponent implements OnInit {
       });
     }
     else {
-      this.toastComponent.showToast('Warning', 'Vui lòng nhập thông tin đăng nhập.');
+      this.errorMessage = "Vui lòng nhập thông tin đăng nhập.";
+    }
+  }
+
+  //truyền thông tin đăng nhập vào AppTopbarComponent để hiển thị thông tin người dùng
+  emitEventLogin(token: string): void {
+    const claims: any = jwtDecode(token);
+    if (claims) {
+      const objUser: any = {
+        username: claims.unique_name,
+        fullName: claims.given_name,
+        email: claims.email,
+        gender: claims.gender,
+      };
+      this._eventEmitterService.emitEventLogin(objUser);
     }
   }
 

@@ -1,11 +1,10 @@
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Console } from 'console';
 import { Gender_Options } from '../../config/gender.config';
 import { UsersService } from '../../lib-shared/services/users.service';
 import { ToastComponent } from '../../shared/toast/toast.component';
 import { User } from '../../lib-shared/models/user';
-import { ageValidator, minimumAgeAsyncValidator } from '../../lib-shared/classes/form-validators';
+import { ageValidator } from '../../lib-shared/classes/form-validators';
 import DateExtended from '../../shared/datepicker/date-extended';
 import moment from 'moment';
 /**

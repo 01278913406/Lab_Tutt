@@ -1,4 +1,4 @@
-<table class="table table-sm" *ngIf="currentDisplayDate && currentDate">
+<table class="table table-sm table-datepicker" *ngIf="currentDisplayDate && currentDate">
     <thead>
         <tr class="fs-6 text-center">
             <th (click)="displayAction('prev')" [ngClass]="{disabled: !validDisplayAction('prev')}">
@@ -39,8 +39,8 @@
     <tbody *ngIf="displayMode === 'months'">
         <tr *ngFor="let row of config.monthNames" class="months fs-6 text-center">
             <td *ngFor="let month of row" (click)="pickDate(currentDisplayDate.format('Y-' + month.number), 'month')"
-                [ngClass]="{active: currentDisplayDate.format('Y' + month.number) == currentDate.format('Yn'),
-				disabled: !isEnabledDate(currentDisplayDate.format('Y-' + month.number), 'month')}">
+                [ngClass]="{'active': currentDisplayDate.format('Y' + month.number) == currentDate.format('Y0n'),
+				'disabled': !isEnabledDate(currentDisplayDate.format('Y-' + month.number), 'month')}">
                 {{month.name}}
             </td>
         </tr>
@@ -48,7 +48,7 @@
     <tbody *ngIf="displayMode === 'years'">
         <tr *ngFor="let row of yearsData" class="years fs-6 text-center">
             <td *ngFor="let y of row" (click)="pickDate(y, 'year')"
-                [ngClass]="{active: y == currentDate.getFullYear(), disabled: !isEnabledDate(y + '', 'year')}">
+                [ngClass]="{'active': y == currentDate.getFullYear(), 'disabled': !isEnabledDate(y + '', 'year')}">
                 {{y}}
             </td>
         </tr>

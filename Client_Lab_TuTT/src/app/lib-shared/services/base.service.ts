@@ -177,21 +177,6 @@ export abstract class BaseService {
                 'Access-Control-Allow-Origin': '*'
             })
         };
-       
-        // let strAccessToken:any;
-        // const user = localStorage.getItem(environment.caches.USER_KEY);
-        // if (user) {
-        //     strAccessToken = JSON.parse(user);
-        // }
-        // if (strAccessToken) {
-        //     httpOptions = {
-        //         headers: new HttpHeaders({
-        //             'Content-Type': 'application/json',
-        //             'Access-Control-Allow-Origin': '*',
-        //             'Authorization': `Bearer ${strAccessToken.token}`
-        //         })
-        //     };
-        // }
         return httpOptions;
     }
 }

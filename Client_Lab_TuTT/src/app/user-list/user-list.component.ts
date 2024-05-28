@@ -7,6 +7,8 @@ import { SecondPageIndexBase } from '../lib-shared/classes/base/second-page-inde
 import { Gender_Options } from '../config/gender.config';
 import DateExtended from '../shared/datepicker/date-extended';
 import { FormControl } from '@angular/forms';
+import { AuthService } from '../lib-shared/auth/auth.service';
+import { Router } from '@angular/router';
 
 
 /**
@@ -33,6 +35,7 @@ export class UserListComponent extends SecondPageIndexBase {
   showDeleteDialog: boolean = false;    //hiển thị dialog xác nhận khi xóa
   confirmMessageDelete = '';
   selectedUserId: number | null = null; //UserId khi chọn xóa
+  selectedUserName=''; //UserName khi chọn xóa
 
   //xóa nhiều người dùng
   showMultiDeleteDialog: boolean = false;    //hiển thị dialog xác nhận khi xóa
@@ -51,14 +54,23 @@ export class UserListComponent extends SecondPageIndexBase {
   genderOptions = Gender_Options;
   @ViewChild(ToastComponent) toastComponent!: ToastComponent;
 
-  constructor(private _usersService: UsersService) {
+  constructor(
+    private _router: Router,
+    private _usersService: UsersService,
+    private _authService: AuthService
+  ) {
     super();
   }
 
   ngOnInit() {
     this.getData();
+    this.getCurrentUser();
   }
 
+
+  async getCurrentUser() {
+    this.currentUser = await this._authService.getCurrentUser();
+  }
   /**
    * lấy danh sách người dùng
    * @returns data 
@@ -100,8 +112,12 @@ export class UserListComponent extends SecondPageIndexBase {
    * @returns user 
    */
   async deleteUser(user: User): Promise<void> {
-    this.confirmMessageDelete = "Xác nhận xóa người dùng: " + user.username;
+    if (this.currentUser?.username == user.username)
+      this.confirmMessageDelete = "Bạn xác nhận xóa tài khoản của chính mình: " + user.username;
+    else
+      this.confirmMessageDelete = "Xác nhận xóa người dùng: " + user.username;
     this.selectedUserId = user.id;
+    this.selectedUserName = user.username;
     this.showDeleteDialog = true;
 
   }
@@ -167,6 +183,7 @@ export class UserListComponent extends SecondPageIndexBase {
     }
     this.showDeleteDialog = false;
     this.selectedUserId = null;
+    this.selectedUserName = '';
   }
 
   /**

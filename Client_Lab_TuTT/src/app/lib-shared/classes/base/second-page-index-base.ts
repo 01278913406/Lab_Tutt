@@ -5,12 +5,14 @@ import { DatePipe } from '@angular/common';
 import * as moment from 'moment';
 
 import { User } from '../../models/user';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
     template: ''
 })
-export abstract class SecondPageIndexBase {
-    currentUser = new User;
+export abstract class SecondPageIndexBase{
+   
+    currentUser!: User | null;
     total = 0;
     page = 1;
     limit = 10;

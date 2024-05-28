@@ -23,7 +23,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/client-lab-tu-tt",
+            "outputPath": "dist/client-lab-tutt",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -52,11 +52,12 @@
           },
           "configurations": {
             "production": {
+              "optimization": true,
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "4mb",
+                  "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -64,10 +65,38 @@
                   "maximumError": "4kb"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "fileReplacements": [
+                {
+                    "replace": "src/environments/environment.ts",
+                    "with": "src/environments/environment.production.ts"
+                }
+            ]
+            },
+            "staging": {
+              "optimization": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "4mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "outputHashing": "all",
+              "fileReplacements": [
+                {
+                    "replace": "src/environments/environment.ts",
+                    "with": "src/environments/environment.staging.ts"
+                }
+            ]
             },
             "development": {
-              "optimization": false,
+              "optimization": true,
               "extractLicenses": false,
               "sourceMap": true
             }
@@ -79,6 +108,9 @@
           "configurations": {
             "production": {
               "buildTarget": "Client_Lab_TuTT:build:production"
+            },
+            "staging": {
+              "buildTarget": "Client_Lab_TuTT:build:staging"
             },
             "development": {
               "buildTarget": "Client_Lab_TuTT:build:development"

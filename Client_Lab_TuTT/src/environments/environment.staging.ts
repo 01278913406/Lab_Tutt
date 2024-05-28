@@ -1,7 +1,7 @@
 export const environment = {
-    production: true,
+    production: false,
     apiDomain: {
-        LABTuttEndPoint: 'http://172.17.0.3:8080/api',
+        LABTuttEndPoint: 'http://127.0.0.1:8080/api',
     },
     caches:{
         USER_KEY : 'cachedUser',

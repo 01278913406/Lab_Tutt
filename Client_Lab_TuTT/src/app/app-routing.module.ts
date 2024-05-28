@@ -8,7 +8,7 @@ import { UserListComponent } from './user-list/user-list.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/nguoi-dung', pathMatch: 'full' },
-  { path: 'home', component: HomeComponent, canActivate: [GuardService] },
+  { path: 'home', component: HomeComponent},
   { path: 'login', component: LoginComponent },
   { path: 'nguoi-dung', component: UserListComponent, canActivate: [GuardService] },
   {

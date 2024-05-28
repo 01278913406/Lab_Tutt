@@ -1,4 +1,4 @@
-.footer {
+/* .footer {
     font-size: 14px;
     background: #0d2d6c;
     font-family: "Roboto";
@@ -109,4 +109,55 @@ b,
 strong,
 th {
     font-weight: bold;
+}
+
+
+
+ */
+
+.footer {
+    padding: 5px 4vw;
+}
+/* css vị trí văn chi nhánh */
+.branch {
+    padding: 25px;
+    padding-top: 1rem;
+}
+
+.footer .branch:first-child {
+    padding-left: 10;
+}
+
+.branch>label {
+    text-transform: uppercase;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--primary);
+}
+
+.branch>div {
+    text-align: justify;
+}
+
+/* css icon mạng xã hội */
+.social {
+    display: inline;
+    width: 30px;
+    margin: 0 5px;
+}
+
+.store {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.store img {
+    width: 100%;
+    max-width: 120px;
+    margin: 0 10px;
+}
+
+.smooth {
+    font-size: 12px;
+    color: #788294;
 }

@@ -1,4 +1,4 @@
-<div class="container">
+<!-- <div class="container">
   <div class="row">
     <div class="col-lg-8 col-md-7 hidden-sm hidden-xs">
       <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -69,7 +69,6 @@
       </div>
     </div>
     <div class="col-lg-4 col-md-5 col-sm-12 col-xs-12">
-      <!-- <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12"> -->
       <div class="login-container">
         <form [formGroup]="formGroup">
           <input name="__RequestVerificationToken" type="hidden"
@@ -78,17 +77,11 @@
           <div class="error-message text-center">{{errorMessage}} </div>
           <div class="input-group">
             <div class="input-group-text">
-              <!-- <input class="form-check-input mt-0" type="checkbox" value="" aria-label="Checkbox for following text input"> -->
               <img src="/assets/images/user-alt-1.svg">
             </div>
             <input type="text" class="form-control" placeholder="Tên đăng nhập" aria-label="Tên đăng nhập"
               formControlName="userName" aria-describedby="basic-addon1">
           </div>
-          <!-- <div class="input-group text-center">
-            <div *ngIf="userName?.invalid && (userName?.dirty || userName?.touched)" class="text-danger">
-              <div *ngIf="userName?.errors?.['required']">Nhập tên đăng nhập.</div>
-            </div>
-          </div> -->
           <div class="input-group">
             <div class="input-group-text">
               <img src="/assets/images/password.svg">
@@ -128,11 +121,70 @@
                 src="https://taxi.binhanhcorp.com/Content/themes/default/images/photo_logo-IOS.svg"></a></div>
         </form>
       </div>
-      <!-- </div> -->
-      <!-- <div class="col-lg-3 hidden-md hidden-sm hidden-xs"></div> -->
+    </div>
+  </div>
+</div> -->
+
+
+
+<div class="banner" [ngStyle]="{'background-image': 'url(' + images[currentImageIndex] + ')'}"
+  style="min-height: 327px;">
+  <div class="row">
+    <div class="news-col col-md order-2 order-md-1">
+      <div class="form-row align-items-center">
+        <div class="col">
+          <h6 class="text-uppercase" title="">Ra mắt tính năng tích hợp Zalo OA</h6>
+          <div title="">Hỗ trợ khách hàng tương tác 2 chiều với khách hàng thông qua Zalo</div>
+        </div>
+        <div class="col-auto"><a target="_blank" class="btn btn-sm rounded-pill px-3"
+            style="background: #8BC34A; font-weight: 500;" href="https://bagps.vn/tin-tuc-c10"><span
+              class="align-middle">Chi tiết →</span></a></div>
+
+      </div>
+    </div>
+    <div class="form-col col-md justify-content-md-end order-1 order-md-2">
+      <div class="form-input">
+        <div class="text-center"><img class="logo" src="/assets/images/login/logo.svg"></div>
+        <div>
+          <form [formGroup]="formGroup" novalidate="" class="ng-pristine ng-invalid ng-touched">
+            <div class="input-row"><i class="fas fa-user input-icon"></i><input setfocusinput="" type="text"
+                name="username" required="" usernamevalidate="" maxlength="50" autocomplete="off"
+                class="form-control ng-pristine ng-invalid ng-touched" placeholder="Tên đăng nhập" minlength="1"
+                formControlName="userName">
+            </div>
+            <div class="input-row" style="position: relative;">
+              <i class="fas fa-lock input-icon"></i>
+              <i class="far fa-eye" title="Hiện" style="position: absolute;cursor: pointer;right: 10px;top: 12px;"
+                (click)="togglePasswordVisibility()"></i>
+              <input [type]="passwordFieldType" name="password" required="" passwordvalidate="" minlength="1"
+                class="form-control ng-untouched ng-pristine ng-invalid" placeholder="Mật khẩu" maxlength="200"
+                formControlName="password">
+            </div>
+
+            <div class="input-row custom-control custom-checkbox d-inline-block">
+              <input type="checkbox" id="rememberLogin" name="rememberLogin"
+                class="custom-control-input ng-untouched ng-pristine ng-valid">
+              <label for="rememberLogin" class="custom-control-label k-label">Ghi nhớ đăng nhập</label>
+            </div>
+            <span class="cursor-pointer float-right blue-text">Quên mật khẩu?</span>
+            <button type="submit" class="btn btn-primary btn-submit" [disabled]="formGroup.invalid"
+              (click)="onSubmitLogin()">
+              Đăng nhập
+            </button>
+            <div class="qr-code">
+              <img src="/assets/images/login/qr-code.svg">
+              <div>Quét mã QR để cài app</div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-dot">
+    <div class="d-flex align-items-center">
+      <button class=""></button><button class=""></button><button class="active"></button>
     </div>
   </div>
 </div>
-
 
 <app-toast></app-toast>

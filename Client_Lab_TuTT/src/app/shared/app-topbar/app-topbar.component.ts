@@ -30,6 +30,7 @@ export class AppTopbarComponent implements OnInit {
   async ngOnInit() {
     this.emitEventLogin();
     await this.getCurrentUser();
+    console.log("crrUser",JSON.stringify(this.crrUser));
   }
   ngOnDestroy() {
     if (this.eventSubjectLogin) {
@@ -54,5 +55,12 @@ export class AppTopbarComponent implements OnInit {
     // Clear user data from localStorage or any other storage
     this._authService.removeUser();
     window.location.href = "/login";
+  }
+
+  isNullOrEmpty(obj: any): boolean {
+    return obj === null || obj === undefined || 
+           (typeof obj === 'object' && Object.keys(obj).length === 0) || 
+           (Array.isArray(obj) && obj.length === 0) || 
+           (typeof obj === 'string' && obj.trim().length === 0);
   }
 }

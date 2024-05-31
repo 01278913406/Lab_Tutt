@@ -1,3 +1,5 @@
-<select [value]="selectedValue" (change)="onSelectionChange($event)" class="form-select">
-    <option *ngFor="let option of options" [value]="option.value">{{ option.display }}</option>
-</select>
+<div class="input-group input-group-sm">
+    <select [value]="selectedValue" (change)="onSelectionChange($event)" class="form-select">
+        <option *ngFor="let option of options" [value]="option.value">{{ option.display }}</option>
+    </select>
+</div>

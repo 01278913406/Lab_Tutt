@@ -18,8 +18,15 @@ RUN npm run build -- --configuration=staging
 
 # Stage 2: Serve the application with Nginx
 FROM nginx:alpine
-
 COPY ./nginx.conf /etc/nginx/nginx.conf
+# config ip v6
+COPY ./nginx.conf /etc/nginx/conf.d/default.conf
+
+# Create a directory inside the container to serve as the mount point for the volume
+RUN mkdir -p /usr/share/nginx/html
+
+# Specify the volume mount point
+# VOLUME /usr/share/nginx/html
 
 COPY --from=build /app/dist/client-lab-tutt/browser /usr/share/nginx/html
 COPY --from=build /app/dist/client-lab-tutt/browser /etc/nginx/html

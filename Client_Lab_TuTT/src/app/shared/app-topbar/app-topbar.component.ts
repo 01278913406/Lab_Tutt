@@ -1,6 +1,7 @@
 import { Component, Injector, OnInit } from '@angular/core';
 import { User } from '../../lib-shared/models/user';
 import { AuthService } from '../../lib-shared/auth/auth.service';
+import { Utilities } from '../../lib-shared/classes/Utilities';
 import { EventEmitterService } from '../../lib-shared/services/event-emitter.service';
 import { Subscription } from 'rxjs';
 
@@ -28,25 +29,22 @@ export class AppTopbarComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.emitEventLogin();
     await this.getCurrentUser();
-    console.log("crrUser",JSON.stringify(this.crrUser));
   }
+  
   ngOnDestroy() {
     if (this.eventSubjectLogin) {
       this.eventSubjectLogin.unsubscribe();
     }
   }
 
-  //dùng để truyền thông tin người dùng khi đăng nhập thành công trang login
-  emitEventLogin(){
+  //lấy thông tin người dùng đã đăng nhập
+  async getCurrentUser() {
     this.eventSubjectLogin = this._eventEmitterService.eventLogin$.subscribe(event => {
       this.crrUser = event;
     });
-  }
-  //lấy thông tin người dùng đã đăng nhập
-  async getCurrentUser() {
-    this.crrUser = await this._authService.getCurrentUser();
+    if (!this.crrUser)
+      this.crrUser = await this._authService.getCurrentUser();
   }
 
   //đăng xuất
@@ -57,10 +55,8 @@ export class AppTopbarComponent implements OnInit {
     window.location.href = "/login";
   }
 
+  //kiểm tra object null
   isNullOrEmpty(obj: any): boolean {
-    return obj === null || obj === undefined || 
-           (typeof obj === 'object' && Object.keys(obj).length === 0) || 
-           (Array.isArray(obj) && obj.length === 0) || 
-           (typeof obj === 'string' && obj.trim().length === 0);
+    return Utilities.isNullOrEmpty(obj);
   }
 }

@@ -20,7 +20,7 @@ export class UserEditComponent {
   @Input() user: any = null;
   @Output() save = new EventEmitter<any>();
   @Output() cancel = new EventEmitter<void>();
-  
+
   editUserForm: FormGroup;
 
   isEdit: boolean = false; // ẩn hiện trạng tái với trường hợp thêm mới và chỉnh sửa người dùng
@@ -35,7 +35,7 @@ export class UserEditComponent {
   ) {
     this.editUserForm = this.__formBuilder.group({
       id: [-1],
-      username: ['', [Validators.required, Validators.maxLength(50)]],
+      username: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9_-]{3,16}$/), Validators.maxLength(50)]],
       password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(100)]],
       fullName: ['', [Validators.required, Validators.maxLength(200)]],
       phoneNumber: ['', [Validators.required, Validators.pattern("(0)[0-9 ]{9}")]],
@@ -86,14 +86,14 @@ export class UserEditComponent {
     return `${day}/${month}/${year}`;
   }
 
- 
- //dịnh dạng ngày tháng ô tìm kiếm đến ngày
- displaybirthDateFormatter = (date: DateExtended): string => {
-  if (!date.isValid()) {
-    return 'ngày/tháng/năm';
-  }
-  return `${date.format('d/m/Y')}`;
-};
+
+  //dịnh dạng ngày tháng ô tìm kiếm đến ngày
+  displaybirthDateFormatter = (date: DateExtended): string => {
+    if (!date.isValid()) {
+      return 'ngày/tháng/năm';
+    }
+    return `${date.format('d/m/Y')}`;
+  };
 
   /**
    * Determines whether save on
@@ -115,7 +115,7 @@ export class UserEditComponent {
         phoneNumber: this.editUserForm.value.phoneNumber,
         email: this.editUserForm.value.email,
         gender: this.editUserForm.value.gender,
-        birthDate: moment(this.editUserForm.value.birthDate).format('YYYY-MM-DD') 
+        birthDate: moment(this.editUserForm.value.birthDate).format('YYYY-MM-DD')
       };
       //call api save người dùng
       await this._usersService.SaveUser(modelEdit).then(rs => {

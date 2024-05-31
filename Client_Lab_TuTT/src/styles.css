@@ -1,3 +1,6 @@
+@import "../node_modules/@fortawesome/fontawesome-free/css/all.min.css";
+@import "../node_modules/bootstrap-icons/font/bootstrap-icons.css";
+@import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 /* You can add global styles to this file, and also import other style files */
 
 :root {
@@ -74,4 +77,14 @@ html body {
     font-size: 13px;
     background-color: #fff;
     --xSpacing: 4vw;
+}
+
+.box-container {
+    padding: 5px var(--xSpacing);
+}
+.btn-customer-ms
+{
+    --bs-btn-padding-y: .22rem; 
+    --bs-btn-padding-x: .4rem; 
+    --bs-btn-font-size: .60rem;
 }

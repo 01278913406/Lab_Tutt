@@ -1,5 +1,5 @@
 <div class="dropdown-center" [ngClass]="{'show': isOpen}">
-    <div class="input-group flex-nowrap">
+    <div class="input-group input-group-sm flex-nowrap">
         <input type="text" class="form-control" [formControl]="inputControl" datepicker-input
             [attr.placeholder]="placeholder" *ngIf="!displayValue" (click)="isOpen = true" />
         <input type="text" class="form-control" [value]="displayValue" [attr.placeholder]="placeholder"

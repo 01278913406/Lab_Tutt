@@ -1,10 +1,8 @@
 import { Inject, Injectable, Injector, PLATFORM_ID } from '@angular/core';
-import { Observable, of } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 import { jwtDecode } from "jwt-decode";
 
 import { User } from '../models/user';
-import { promises } from 'node:fs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { BaseService } from '../services/base.service';

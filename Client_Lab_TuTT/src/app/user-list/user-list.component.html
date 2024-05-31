@@ -1,94 +1,99 @@
-<div class="container mt-4">
-    <div class="row mt-3">
-        <h4>DANH SÁCH NGƯỜI DÙNG</h4>
+<div class="box-container">
+    <div class="row mt-3 title-page">
+        DANH SÁCH NGƯỜI DÙNG
     </div>
-    <div class="row mb-3">
-        <div class="col-md-2 mt-3">
-            <app-select-dropdown [options]="genderOptions" [selectedValue]="searchModel.gender"
-                (selectionChange)="onSelectionGenderChange($event)">
-            </app-select-dropdown>
-        </div>
-        <div class="col-md-2 mt-3">
-            <div class="input-group">
-
-                <!-- <input placeholder="Từ ngày" class="form-control" type="text" onfocus="(this.type='date')"
-                    onblur="(this.type='text')" id="fromDate" [(ngModel)]="searchModel.fromDate"
-                    [ngModelOptions]="{standalone: true}" /> -->
-                <datepicker [(ngModel)]="searchModel.fromDate" [displayFormatter]="displayFromDateFormatter"
-                    [showIcon]="true"></datepicker>
+    <div class="row mb-3 gy-2 gx-3 align-items-center">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-auto mt-3">
+                    <div class="input-group">
+                        <app-select-dropdown [options]="genderOptions" [selectedValue]="searchModel.gender"
+                            (selectionChange)="onSelectionGenderChange($event)">
+                        </app-select-dropdown>
+                    </div>
+                </div>
+                <div class="col-auto mt-3">
+                    <div class="input-group">
+                        <datepicker [(ngModel)]="searchModel.fromDate" [displayFormatter]="displayFromDateFormatter"
+                            [showIcon]="true">
+                        </datepicker>
+                    </div>
+                </div>
+                <div class="col-auto mt-3">
+                    <div class="input-group">
+                        <datepicker [(ngModel)]="searchModel.toDate" [displayFormatter]="displayToDateFormatter"
+                            [showIcon]="true">
+                        </datepicker>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="col-md-2 mt-3">
-            <div class="input-group">
-                <!-- <input placeholder="Đến ngày" class="form-control" type="text" onfocus="(this.type='date')"
-                    onblur="(this.type='text')" id="toDate" [(ngModel)]="searchModel.toDate"
-                    [ngModelOptions]="{standalone: true}" /> -->
-                <datepicker [(ngModel)]="searchModel.toDate" [displayFormatter]="displayToDateFormatter"  [showIcon]="true"></datepicker>
-            </div>
-
         </div>
         <div class="col-md-6 mt-3">
-            <div class="input-group">
+            <div class="input-group input-group-sm">
                 <input type="text" autocomplete="off" class="form-control" placeholder="Tìm kiếm theo..."
                     aria-label="Tìm kiếm theo..." aria-describedby="basic-addon1" [(ngModel)]="searchModel.key"
                     [ngModelOptions]="{standalone: true}" (keyup.enter)="onSearch()">
-                <div class="input-group-text">
+                <!-- <div class="input-group-text">
                     <img src="/assets/images/icons/search-svg.svg">
-                </div>
-                <button type="button" class="btn btn-primary" (click)="onSearch()">Tìm kiếm</button>
+                </div> -->
+                <button type="button" class="btn btn-primary btn-sm" (click)="onSearch()">Tìm kiếm</button>
             </div>
         </div>
+
+
     </div>
-    <div class="row mt-3 mb-3">
-        <div class="col-auto">
-            <button type="button" class="btn btn-primary" (click)="openEditModal(null)"> <i
+    <div class="row mb-3">
+        <div class="col-auto input-group-sm">
+            <button type="button" class="btn btn-primary btn-sm" (click)="openEditModal(null)"> <i
                     class="fa-solid fa-plus"></i> Thêm mới</button>
         </div>
         <div class="col-auto" *ngIf="selectedItems.length">
-            <button type="button" class="btn btn-primary" (click)="onDeleteMultiUser()"> <i
+            <button type="button" class="btn btn-primary btn-sm" (click)="onDeleteMultiUser()"> <i
                     class="fa-solid fa-plus"></i> Xóa Người dùng đã chọn</button>
             <app-confirm-dialog *ngIf="showMultiDeleteDialog" [message]="confirmMessageMultiDelete"
                 (confirm)="handleMultiDeleteConfirm($event)">
             </app-confirm-dialog>
         </div>
+   
     </div>
     <div class="row table-responsive">
-        <table class="table table-striped">
-            <thead>
+        <div class="overflow-auto" style="height: 70vh;">
+        <table class="table" style="height: 95%">
+            <thead class="table-primary">
                 <tr>
-                    <th class="text-center">STT</th>
-                    <th class="text-center">Chọn</th>
-                    <th class="text-start">Họ tên</th>
-                    <th class="text-center">Tên đăng nhập</th>
-                    <th class="text-center">Ngày sinh </th>
-                    <th class="text-center">Giới tính </th>
-                    <th class="text-center">Điện thoại </th>
-                    <th class="text-start">Email</th>
-                    <th class="text-center">Sửa</th>
-                    <th class="text-center">Xóa</th>
+                    <th class="fw-bolder text-center">STT</th>
+                    <th class="fw-bolder text-center">Chọn</th>
+                    <th class="fw-bolder text-start">Họ tên</th>
+                    <th class="fw-bolder text-center">Tên đăng nhập</th>
+                    <th class="fw-bolder text-center">Ngày sinh </th>
+                    <th class="fw-bolder text-center">Giới tính </th>
+                    <th class="fw-bolder text-center">Điện thoại </th>
+                    <th class="fw-bolder text-start">Email</th>
+                    <th class="fw-bolder text-center">Hành động</th>
+                    <!-- <th class="text-center">Xóa</th> -->
                 </tr>
             </thead>
-            <tbody>
+            <tbody >
                 <tr *ngFor="let user of dataSource; let i = index">
-                    <th  class="fw-normal text-center">{{ (limit * (page -1)) +( i + 1) }}</th>
-                    <th class="fw-normal text-center">
+                    <th class="lh-lg fw-normal text-center" width="50">{{ (limit * (page -1)) +( i + 1) }}</th>
+                    <th class="lh-lg fw-normal text-center">
                         <input class="form-check-input" type="checkbox" (change)="toggleSelection(user.id)">
                     </th>
-                    <th class="fw-normal text-start">{{ user.fullName }}</th>
-                    <th class="fw-normal text-center">{{ user.username }}</th>
-                    <th class="fw-normal text-center">{{ user.birthDate | date:'dd/MM/yyyy' }}</th>
-                    <th class="fw-normal text-center">{{ user.gender }}</th>
-                    <th class="fw-normal text-center">{{ user.phoneNumber }} </th>
-                    <th class="fw-normal text-start">{{ user.email }}</th>
-                    <td class="fw-normal text-center">
-                        <button class="btn btn-primary btn-sm me-1" (click)="openEditModal(user)"><i
+                    <th class="lh-lg fw-normal text-start">{{ user.fullName }}</th>
+                    <th class="lh-lg fw-normal text-center">{{ user.username }}</th>
+                    <th class="lh-lg fw-normal text-center">{{ user.birthDate | date:'dd/MM/yyyy' }}</th>
+                    <th class="lh-lg fw-normal text-center">{{ user.gender }}</th>
+                    <th class="lh-lg fw-normal text-center">{{ user.phoneNumber }} </th>
+                    <th class="lh-lg fw-normal text-start">{{ user.email }}</th>
+                    <td class="lh-lg fw-normal text-center">
+                        <button class="btn btn-primary me-2 btn-customer-ms" (click)="openEditModal(user)"><i
                                 class="fas fa-edit"></i></button>
                         <app-user-edit *ngIf="showEditDialog" [user]="selectedUser" (save)="handleSave($event)"
                             [title]="titleEditDialog" (cancel)="handleCancel()">
                         </app-user-edit>
-                    </td>
-                    <td class="fw-normal text-center">
-                        <button class="btn btn-danger btn-sm" (click)="deleteUser(user)"><i
+                    <!-- </td>
+                    <td class="fw-normal text-center"> -->
+                        <button class="btn btn-danger me-2 btn-customer-ms" (click)="deleteUser(user)"><i
                                 class="fas fa-trash"></i></button>
                         <app-confirm-dialog *ngIf="showDeleteDialog" [message]="confirmMessageDelete"
                             (confirm)="handleDeleteConfirm($event)">
@@ -98,9 +103,10 @@
             </tbody>
         </table>
     </div>
-    <div class="row mb-3">
+    </div>
+    <div class="row">
         <div class="col-lg-7 col-md-7 hidden-sm hidden-xs">
-            <div class="row row-cols-lg-auto g-3 align-items-center">
+            <div class="row row-cols-lg-auto g-3 align-items-center lh-lg" style="font-size: 12px;">
                 <div class="col-sm-2">
                     Hiển thị
                 </div>

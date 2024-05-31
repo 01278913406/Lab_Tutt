@@ -1,27 +1,6 @@
 .topbar {
-    padding: 5px 4vw;
+    padding: 5px var(--xSpacing);
 }
-
-/* .nav-link {
-    color: #fff;
-    font-size: 15px;
-    font-weight: 700;
-} */
-
-/* .navbar-nav {
-    margin: auto;
-}
-
-.navbar-nav {
-    margin: auto;
-}
-.nav-item .nav-link{
-    color: #0959a0;
-    font-family: Roboto, Helvetica Neue, sans-serif;
-    font-size: 13px;
-} */
-
-
 
 .navbar {
     padding: 5px 4vw;

@@ -1,8 +1,8 @@
 <div class="modal fade show" tabindex="-1" style="display: block;" aria-modal="true" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-dialog custom-modal-width">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">{{title}}</h5>
+                <div class="modal-title">{{title}}</div>
                 <button type="button" class="btn-close" (click)="onCancel()"></button>
             </div>
             <div class="modal-body">
@@ -11,8 +11,8 @@
                         <label class="col-sm-3 col-form-label text-start">Tên đăng nhập <span
                                 class="labelrequired">*</span></label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" formControlName="username" [readonly]="isEdit"
-                                required>
+                            <input type="text" class="form-control form-control-sm" formControlName="username"
+                                [readonly]="isEdit" required>
                             <div *ngIf="editUserForm.get('username')?.errors?.['required'] && editUserForm.get('username')?.touched"
                                 class="mt-3 text-danger text-start">
                                 Tên đăng nhập không được để trống.</div>
@@ -25,7 +25,7 @@
                         <label class="col-sm-3 col-form-label text-start">Họ tên nhân viên <span
                                 class="labelrequired">*</span></label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control " formControlName="fullName" required>
+                            <input type="text" class="form-control form-control-sm" formControlName="fullName" required>
                             <div *ngIf="editUserForm.get('fullName')?.errors?.['required'] && editUserForm.get('fullName')?.touched"
                                 class="mt-3 text-danger text-start">
                                 Tên nhân viên không được để trống.</div>
@@ -38,29 +38,29 @@
                     <div class="mb-3 row">
                         <label class="col-sm-3 col-form-label text-start">Ngày sinh <span
                                 class="labelrequired">*</span></label>
-                        <div class="col-sm-5">
-                            <!-- <input type="text" class="form-control" placeholder="dd/MM/yyyy"
-                                formControlName="birthDate"> -->
-                                <datepicker formControlName="birthDate" [displayFormatter]="displaybirthDateFormatter" [showIcon]="true"></datepicker>
-                            <div *ngIf="editUserForm.get('birthDate')?.errors?.['required'] && editUserForm.get('birthDate')?.touched"
-                                class="mt-3 text-danger text-start">
-                                Ngày sinh không được để trống.</div>
-                            <div *ngIf="editUserForm.get('birthDate')?.errors?.['underage']"
-                                class="text-danger text-start mt-3">
-                                Tuổi lớn hơn 18
+                        <div class="col-sm-9 row">
+                            <div class="col-sm-7 formGroup">
+                                <datepicker formControlName="birthDate" [displayFormatter]="displaybirthDateFormatter"
+                                    [showIcon]="true">
+                                </datepicker>
+                                <div *ngIf="editUserForm.get('birthDate')?.errors?.['required'] && editUserForm.get('birthDate')?.touched"
+                                    class="mt-3 text-danger text-start">
+                                    Ngày sinh không được để trống.</div>
+                                <div *ngIf="editUserForm.get('birthDate')?.errors?.['underage']"
+                                    class="text-danger text-start mt-3">
+                                    Tuổi lớn hơn 18
+                                </div>
                             </div>
-                        </div>
-                        <!-- <label class="col-sm-2 col-form-label">Giới tính <span class="labelrequired">*</span></label> -->
-                        <div class="col-sm-4">
-                            <!-- <input type="text" class="form-control"  formControlName="gender"> -->
-                            <select class="form-control" formControlName="gender">
-                                <!-- <option value="">Chọn giới tính</option> -->
-                                <option *ngFor="let gender of genderOptions" [value]="gender.value">{{ gender.display }}
-                                </option>
-                            </select>
-                            <div *ngIf="editUserForm.get('gender')?.invalid && editUserForm.get('gender')?.touched"
-                                class="text-danger">
-                                Chọn giới tính.
+                            <div class="col-sm-5 formGroup">
+                                <select class="form-control form-control-sm" formControlName="gender">
+                                    <option *ngFor="let gender of genderOptions" [value]="gender.value">{{
+                                        gender.display }}
+                                    </option>
+                                </select>
+                                <div *ngIf="editUserForm.get('gender')?.invalid && editUserForm.get('gender')?.touched"
+                                    class="text-danger">
+                                    Chọn giới tính.
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -68,7 +68,7 @@
                         <label class="col-sm-3 col-form-label text-start">Số điện thoại <span
                                 class="labelrequired">*</span></label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" formControlName="phoneNumber"
+                            <input type="text" class="form-control form-control-sm" formControlName="phoneNumber"
                                 placeholder="0818911987">
                             <div *ngIf="editUserForm.get('phoneNumber')?.errors?.['required'] && editUserForm.get('phoneNumber')?.touched"
                                 class="mt-3 text-danger text-start">
@@ -82,7 +82,7 @@
                     <div class="mb-3 row">
                         <label class="col-sm-3 col-form-label text-start">Email</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" formControlName="email">
+                            <input type="text" class="form-control form-control-sm" formControlName="email">
                         </div>
                     </div>
                     <div class="mb-3 row" *ngIf="!isEdit">
@@ -90,7 +90,8 @@
                                 class="labelrequired">*</span></label>
                         <div class="col-sm-9">
                             <div class="input-group flex-nowrap">
-                                <input [type]="passwordFieldType" class="form-control" formControlName="password" [disabled]="isEdit">
+                                <input [type]="passwordFieldType" class="form-control form-control-sm"
+                                    formControlName="password" [disabled]="isEdit">
                                 <span class="input-group-text" id="addon-wrapping"
                                     (click)="togglePasswordVisibility()"><i class="fa-regular fa-eye"></i></span>
                             </div>
@@ -110,8 +111,8 @@
                                 class="labelrequired">*</span></label>
                         <div class="col-sm-9">
                             <div class="input-group flex-nowrap">
-                                <input [type]="confimPasswordFieldType" class="form-control" [disabled]="isEdit"
-                                    formControlName="confimPassword">
+                                <input [type]="confimPasswordFieldType" class="form-control form-control-sm"
+                                    [disabled]="isEdit" formControlName="confimPassword">
                                 <span class="input-group-text" id="addon-wrapping"
                                     (click)="toggleconfimPasswordVisibility()"><i class="fa-regular fa-eye"></i></span>
                             </div>
@@ -129,8 +130,9 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" (click)="onCancel()">Hủy</button>
-                <button type="button" class="btn btn-primary" [disabled]="editUserForm.invalid" (click)="onSave()">Cập
+                <button type="button" class="btn btn-secondary btn-sm" (click)="onCancel()">Hủy</button>
+                <button type="button" class="btn btn-primary btn-sm" [disabled]="editUserForm.invalid"
+                    (click)="onSave()">Cập
                     nhật</button>
             </div>
         </div>

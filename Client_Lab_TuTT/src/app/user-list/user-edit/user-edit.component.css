@@ -1,3 +1,32 @@
-.labelrequired{
+.labelrequired {
     color: red;
+}
+
+.modal-title {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.modal-body {
+    font-size: 12px;
+    font-weight: 400;
+}
+
+/* chiều rộng của modal */
+.custom-modal-width {
+    max-width: 50%;
+}
+
+@media (min-width: 576px) {
+    .custom-modal-width {
+        max-width: 50%;
+        /* Set custom width for desktop */
+    }
+}
+
+@media (max-width: 575.98px) {
+    .custom-modal-width {
+        max-width: 100%;
+        /* Set custom width for mobile */
+    }
 }

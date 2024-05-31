@@ -1,26 +1,26 @@
-import { Subject } from 'rxjs/internal/Subject';
-import { Component, OnDestroy } from '@angular/core';
-import { environment } from '../../../../environments/environment';
+
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { User } from '../../models/user';
 
 @Component({
     template: ''
 })
-export abstract class ComponentBase implements OnDestroy {
-
-    public _unsubscribeAll: Subject<any>;
-
+export abstract class ComponentBase implements OnInit, OnDestroy {
+    currentUser!: User | null;
     constructor() {
-        this._unsubscribeAll = new Subject();
     }
 
-    /**
-    * On destroy
-    */
+    ngOnInit() {
+        this.onInit();
+    }
+
     ngOnDestroy(): void {
-        // Unsubscribe from all subscriptions
+        this.onDestroy();
     }
 
-
+    protected abstract onInit(): void;
+    protected abstract onDestroy(): void;
+    protected abstract getCurrentUser(): void;
 
 
 }

@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   ) {
 
     this.formGroup = this._formBuilder.group({
-      userName: ['', Validators.required],
+      userName: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9_-]{3,16}$/)]],
       password: ['', Validators.required]
     });
   }

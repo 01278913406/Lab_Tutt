@@ -9,6 +9,9 @@
     text-align: center;
     margin: 0 auto;
 }
+.input-group-drop {
+    width: 100%;
+}
 
 .input-group img {
     height: 15px;

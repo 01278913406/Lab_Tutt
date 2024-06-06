@@ -5,21 +5,21 @@
     <div class="row mb-3 gy-2 gx-3 align-items-center">
         <div class="col-md-6">
             <div class="row">
-                <div class="col-auto mt-3">
+                <div class="col-4 mt-3">
                     <div class="input-group">
-                        <app-select-dropdown [options]="genderOptions" [selectedValue]="searchModel.gender"
-                            (selectionChange)="onSelectionGenderChange($event)">
+                        <app-select-dropdown class="input-group-drop" [options]="genderOptions"
+                            [selectedValue]="searchModel.gender" (selectionChange)="onSelectionGenderChange($event)">
                         </app-select-dropdown>
                     </div>
                 </div>
-                <div class="col-auto mt-3">
+                <div class="col-4 mt-3">
                     <div class="input-group">
                         <datepicker [(ngModel)]="searchModel.fromDate" [displayFormatter]="displayFromDateFormatter"
                             [showIcon]="true">
                         </datepicker>
                     </div>
                 </div>
-                <div class="col-auto mt-3">
+                <div class="col-4 mt-3">
                     <div class="input-group">
                         <datepicker [(ngModel)]="searchModel.toDate" [displayFormatter]="displayToDateFormatter"
                             [showIcon]="true">
@@ -28,19 +28,16 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6 mt-3">
-            <div class="input-group input-group-sm">
+        <div class="col-md-6">
+            <div class="input-group input-group-sm  mt-3">
                 <input type="text" autocomplete="off" class="form-control" placeholder="Tìm kiếm theo..."
                     aria-label="Tìm kiếm theo..." aria-describedby="basic-addon1" [(ngModel)]="searchModel.key"
                     [ngModelOptions]="{standalone: true}" (keyup.enter)="onSearch()">
-                <!-- <div class="input-group-text">
-                    <img src="/assets/images/icons/search-svg.svg">
-                </div> -->
+
                 <button type="button" class="btn btn-primary btn-sm" (click)="onSearch()">Tìm kiếm</button>
+                <button type="button" class="btn btn-danger btn-sm" (click)="onHuySearch()">Hủy tìm kiếm</button>
             </div>
         </div>
-
-
     </div>
     <div class="row mb-3">
         <div class="col-auto input-group-sm">
@@ -54,55 +51,56 @@
                 (confirm)="handleMultiDeleteConfirm($event)">
             </app-confirm-dialog>
         </div>
-   
+
     </div>
     <div class="row table-responsive">
-        <div class="overflow-auto" style="height: 70vh;">
-        <table class="table" style="height: 95%">
-            <thead class="table-primary">
-                <tr>
-                    <th class="fw-bolder text-center">STT</th>
-                    <th class="fw-bolder text-center">Chọn</th>
-                    <th class="fw-bolder text-start">Họ tên</th>
-                    <th class="fw-bolder text-center">Tên đăng nhập</th>
-                    <th class="fw-bolder text-center">Ngày sinh </th>
-                    <th class="fw-bolder text-center">Giới tính </th>
-                    <th class="fw-bolder text-center">Điện thoại </th>
-                    <th class="fw-bolder text-start">Email</th>
-                    <th class="fw-bolder text-center">Hành động</th>
-                    <!-- <th class="text-center">Xóa</th> -->
-                </tr>
-            </thead>
-            <tbody >
-                <tr *ngFor="let user of dataSource; let i = index">
-                    <th class="lh-lg fw-normal text-center" width="50">{{ (limit * (page -1)) +( i + 1) }}</th>
-                    <th class="lh-lg fw-normal text-center">
-                        <input class="form-check-input" type="checkbox" (change)="toggleSelection(user.id)">
-                    </th>
-                    <th class="lh-lg fw-normal text-start">{{ user.fullName }}</th>
-                    <th class="lh-lg fw-normal text-center">{{ user.username }}</th>
-                    <th class="lh-lg fw-normal text-center">{{ user.birthDate | date:'dd/MM/yyyy' }}</th>
-                    <th class="lh-lg fw-normal text-center">{{ user.gender }}</th>
-                    <th class="lh-lg fw-normal text-center">{{ user.phoneNumber }} </th>
-                    <th class="lh-lg fw-normal text-start">{{ user.email }}</th>
-                    <td class="lh-lg fw-normal text-center">
-                        <button class="btn btn-primary me-2 btn-customer-ms" (click)="openEditModal(user)"><i
-                                class="fas fa-edit"></i></button>
-                        <app-user-edit *ngIf="showEditDialog" [user]="selectedUser" (save)="handleSave($event)"
-                            [title]="titleEditDialog" (cancel)="handleCancel()">
-                        </app-user-edit>
-                    <!-- </td>
-                    <td class="fw-normal text-center"> -->
-                        <button class="btn btn-danger me-2 btn-customer-ms" (click)="deleteUser(user)"><i
-                                class="fas fa-trash"></i></button>
-                        <app-confirm-dialog *ngIf="showDeleteDialog" [message]="confirmMessageDelete"
-                            (confirm)="handleDeleteConfirm($event)">
-                        </app-confirm-dialog>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+        <div>
+            <table class="table" style="height: 95%">
+                <thead class="table-primary">
+                    <tr>
+                        <th class="fw-bolder text-center">STT</th>
+                        <th class="fw-bolder text-center">Chọn</th>
+                        <th class="fw-bolder text-start">Họ tên</th>
+                        <th class="fw-bolder text-center">Tên đăng nhập</th>
+                        <th class="fw-bolder text-center">Ngày sinh </th>
+                        <th class="fw-bolder text-center">Giới tính </th>
+                        <th class="fw-bolder text-center">Điện thoại </th>
+                        <th class="fw-bolder text-start">Email</th>
+                        <th class="fw-bolder text-center">Hành động</th>
+                        <!-- <th class="text-center">Xóa</th> -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let user of dataSource; let i = index">
+                        <th class="lh-lg fw-normal text-center" width="50">{{ (limit * (page -1)) +( i + 1) }}</th>
+                        <th class="lh-lg fw-normal text-center">
+                            <input class="form-check-input" type="checkbox" (change)="toggleSelection(user.id)">
+                        </th>
+                        <th class="lh-lg fw-normal text-start">{{ user.fullName }}</th>
+                        <th class="lh-lg fw-normal text-center">{{ user.username }}</th>
+                        <th class="lh-lg fw-normal text-center">{{ user.birthDate | date:'dd/MM/yyyy' }}</th>
+                        <th class="lh-lg fw-normal text-center">{{ user.gender }}</th>
+                        <th class="lh-lg fw-normal text-center">{{ user.phoneNumber }} </th>
+                        <th class="lh-lg fw-normal text-start">{{ user.email }}</th>
+                        <td class="lh-lg fw-normal text-center">
+                            <button class="btn btn-danger me-2 btn-customer-ms" (click)="deleteUser(user)"><i
+                                    class="fas fa-trash"></i></button>
+                            <app-confirm-dialog *ngIf="showDeleteDialog" [message]="confirmMessageDelete"
+                                (confirm)="handleDeleteConfirm($event)">
+                            </app-confirm-dialog>
+
+                            <button class="btn btn-primary me-2 btn-customer-ms" (click)="openEditModal(user)"><i
+                                    class="fas fa-edit"></i></button>
+                            <app-user-edit *ngIf="showEditDialog" [user]="selectedUser" (save)="handleSave($event)"
+                                [title]="titleEditDialog" (cancel)="handleCancel()">
+                            </app-user-edit>
+
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
     <div class="row">
         <div class="col-lg-7 col-md-7 hidden-sm hidden-xs">

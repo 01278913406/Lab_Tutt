@@ -106,6 +106,17 @@ export class UserListComponent extends SecondPageIndexBase {
   async onSearch() {
     await this.getData();
   }
+
+  async onHuySearch() {
+    this.searchModel= {
+      key: '',
+      gender: '',
+      fromDate: '',
+      toDate: '',
+    };
+    await this.getData();
+  }
+
   /**
    * Xóa người dùng
    * @param user 

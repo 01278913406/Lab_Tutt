@@ -13,12 +13,13 @@ const locales: any = {
             'Tháng một', 'Tháng hai', 'Tháng ba', 'Tháng bốn', 'Tháng năm', 'Tháng sáu', 'Tháng bảy', 'Tháng tám', 'Tháng chín', 'Tháng mười',
             'Tháng mười một', 'Tháng mười hai'
         ],
-        monthShortNames: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-        dayNames: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-        dayShortNames: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+        monthShortNames: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10',
+        'Tháng 11', 'Tháng 12'],
+        dayNames: ['Chủ nhật', 'Thứ hai', 'Thứ ba', 'Thứ tư', 'Thứ năm', 'Thứ sáu', 'Thứ bảy'],
+        dayShortNames: ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7']
     }
 };
-let defaultLocale = 'en-us';
+let defaultLocale = 'vi-vn';
 
 export interface DateExtendedLocale {
     monthNames: string[],

@@ -22,7 +22,7 @@ docker rm %CONTAINER_NAME%
 
 REM Run the Docker container
 echo Running the Docker container...
-docker run -d -p 9090:80 --name %CONTAINER_NAME% %IMAGE_NAME%
+docker run -d -p 1900:80 --name %CONTAINER_NAME% %IMAGE_NAME%
 
 REM Create Tag the Docker Hub
 echo Running create tag the Docker Hub...
